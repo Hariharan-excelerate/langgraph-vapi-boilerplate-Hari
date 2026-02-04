@@ -95,10 +95,10 @@ flowchart TB
     subgraph ConfirmIdentity["Confirm Identity (caller ID found)"]
         G["Step: ask_are_you_name"]
         G --> H{User says yes?}
-        H -->|Yes| I["Q: To confirm, may I have your date of birth?"<br/>→ step: ask_dob"]
+        H -->|Yes| I["Q: To confirm, may I have your date of birth? (step: ask_dob)"]
         H -->|No / DOB in message| J[Verify DOB with LLM]
         J -->|Match| K["Confirm then services"]
-        J -->|No match| L["DOB_VERIFY_FAIL_TRANSFER<br/>→ offer register/transfer"]
+        J -->|No match| L["DOB_VERIFY_FAIL_TRANSFER - offer register/transfer"]
         I --> M[Verify DOB with LLM]
         M -->|Match| K
         M -->|No match| L
@@ -108,7 +108,7 @@ flowchart TB
     subgraph VerifyUser["Verify User (no caller ID match)"]
         V1["Q: Are you already registered with us, or is this your first time calling?"]
         V1 --> V2{First time?}
-        V2 -->|Yes| V_REG[→ register_flow]
+        V2 -->|Yes| V_REG["register_flow"]
         V2 -->|Returning| V3["Q: May I have your name please?"]
         V3 --> V4[Search by name]
         V4 -->|Found| V5["Q: To confirm, may I have your date of birth?"]
@@ -133,11 +133,11 @@ flowchart TB
         R2 -->|Yes| R4["REGISTER_INTRO + Q: What is your full legal name?"]
         R4 --> R5["Thanks, {name}. Q: What is your date of birth?"]
         R5 --> R6["Got it, {dob}. Q: What is your gender?"]
-        R6 --> R7["Thanks. Q: What's the best phone number to reach you?"<br/>or "The number we have is {phone}. Is that the best number to reach you?"]
+        R6 --> R7["Thanks. Q: What's the best phone number to reach you? Or: The number we have is {phone}. Is that the best number to reach you?"]
         R7 --> R8["Thanks. Q: And your email address? (optional)"]
         R8 --> R9["confirmRegistrationCollected: Name, DOB, Gender, Phone, Email<br/>Q: Is everything correct?"]
         R9 --> R10{User: yes / correct?}
-        R10 -->|Yes| R11[createUser → REGISTER_SUCCESS]
+        R10 -->|Yes| R11[createUser - REGISTER_SUCCESS]
         R10 -->|Correction| R9
         R10 -->|No| R_TR[Transfer to staff]
     end
@@ -146,22 +146,22 @@ flowchart TB
         B1{User ID?}
         B1 -->|No| B_LOOKUP["I need to look you up first..."]
         B1 -->|Yes| B2[getAvailability]
-        B2 --> B3["Single slot: I have {dateWords}. Is that the one you'd like to book?"<br/>Multiple: list slots + Which slot? Say number or date/time"]
-        B3 --> B4[User picks slot → confirm]
+        B2 --> B3["Single slot: I have {dateWords}. Is that the one you'd like to book? Multiple: list slots + Which slot? Say number or date/time"]
+        B3 --> B4[User picks slot - confirm]
         B4 --> B5["I have {dateWords}. Is that the one you'd like to book?"]
         B5 --> B6{User: yes/confirm/book?}
-        B6 -->|Yes| B7[createAppointment → success + BOOK_INSTRUCTIONS_BC_CARD]
+        B6 -->|Yes| B7[createAppointment - success + BOOK_INSTRUCTIONS_BC_CARD]
     end
 
     subgraph RescheduleFlow["Reschedule Flow"]
         RS1[listAppointments]
         RS1 --> RS2["FIND_UPCOMING + list options<br/>Q: Which one would you like to reschedule? Say the option number."]
-        RS2 --> RS3[User picks option → getRescheduleOptions]
+        RS2 --> RS3[User picks option - getRescheduleOptions]
         RS3 --> RS4["New times: {slots}. Which slot? Say number or date/time"]
         RS4 --> RS5[User picks slot]
         RS5 --> RS6["Got it, {dateWords}. Confirm to reschedule?"]
         RS6 --> RS7{User: yes/confirm?}
-        RS7 -->|Yes| RS8[rescheduleAppointment → "Your appointment has been rescheduled. Anything else?"]
+        RS7 -->|Yes| RS8["rescheduleAppointment - Your appointment has been rescheduled. Anything else?"]
     end
 
     subgraph CancelFlow["Cancel Flow"]
@@ -170,7 +170,7 @@ flowchart TB
         C2 --> C3[User picks option]
         C3 --> C4["Q: Are you sure you'd like to cancel?"]
         C4 --> C5{User: yes/confirm?}
-        C5 -->|Yes| C6[cancelAppointment → CANCEL_DONE]
+        C5 -->|Yes| C6[cancelAppointment - CANCEL_DONE]
     end
 
     subgraph EndNodes["End / Single-shot nodes"]
