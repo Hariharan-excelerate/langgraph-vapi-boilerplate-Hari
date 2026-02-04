@@ -82,106 +82,130 @@ flowchart TB
 
 ### Detailed Mermaid: Intents, Confirmations, Verifications & Questions by Flow
 
+The following diagrams break down each flow with its intents, confirmations, verifications, and key questions.
+
+#### 1. Entry & Greeting
+
 ```mermaid
 flowchart TB
-    subgraph Entry["Entry & Greeting"]
-        A[normalize: caller ID] -->         B[lookup: by phone]
-        B --> C{User found?}
-        C -->|Yes| D["greet_personalized<br/>Q: Hello {name}, thank you for calling! This is your scheduling assistant.<br/>Please confirm your date of birth to continue."]
-        C -->|No| E["greet_general<br/>Q: Thank you for calling! This is your scheduling assistant.<br/>How may I help you today?"]
-        E --> F["mention_services<br/>Q: How may I help you today—would you like to book an appointment,<br/>reschedule, cancel, or register?"]
-    end
-
-    subgraph ConfirmIdentity["Confirm Identity (caller ID found)"]
-        G["Step: ask_are_you_name"]
-        G --> H{User says yes?}
-        H -->|Yes| I["Q: To confirm, may I have your date of birth? (step: ask_dob)"]
-        H -->|No / DOB in message| J[Verify DOB with LLM]
-        J -->|Match| K["Confirm then services"]
-        J -->|No match| L["DOB_VERIFY_FAIL_TRANSFER - offer register/transfer"]
-        I --> M[Verify DOB with LLM]
-        M -->|Match| K
-        M -->|No match| L
-        K["CONFIRM_THEN_SERVICES: Thanks for confirming. How would you like to proceed—book, reschedule, cancel?"]
-    end
-
-    subgraph VerifyUser["Verify User (no caller ID match)"]
-        V1["Q: Are you already registered with us, or is this your first time calling?"]
-        V1 --> V2{First time?}
-        V2 -->|Yes| V_REG["register_flow"]
-        V2 -->|Returning| V3["Q: May I have your name please?"]
-        V3 --> V4[Search by name]
-        V4 -->|Found| V5["Q: To confirm, may I have your date of birth?"]
-        V4 -->|Not found, attempts<2| V6["Q: I couldn't find that name. Could you please spell your last name?"]
-        V6 --> V7["That's {letters}, correct?"]
-        V7 --> V4
-        V4 -->|Not found, attempts≥2| V8["Q: I can't find an existing record. Would you like to register as a new user?"]
-        V5 --> V9[Verify DOB with LLM]
-        V9 -->|Match| K
-        V9 -->|No match| V10["DOB_MISMATCH_TRY_PHONE + Q: What's your phone number?"]
-        V10 --> V11[Lookup by phone]
-        V11 -->|Found| K
-        V11 -->|Not found| V8
-        V8 -->|Yes| V_REG
-        V8 -->|No| V_TR["TRANSFER_LOCATE_RECORD"]
-      end
-
-    subgraph RegisterFlow["Register Flow"]
-        R1["Organization check: getBookingRules"]
-        R1 --> R2{Accepting?}
-        R2 -->|No| R3["Q: We're not accepting new registrations. Would you like me to add you to our waitlist?"]
-        R2 -->|Yes| R4["REGISTER_INTRO + Q: What is your full legal name?"]
-        R4 --> R5["Thanks, {name}. Q: What is your date of birth?"]
-        R5 --> R6["Got it, {dob}. Q: What is your gender?"]
-        R6 --> R7["Thanks. Q: What's the best phone number to reach you? Or: The number we have is {phone}. Is that the best number to reach you?"]
-        R7 --> R8["Thanks. Q: And your email address? (optional)"]
-        R8 --> R9["confirmRegistrationCollected: Name, DOB, Gender, Phone, Email<br/>Q: Is everything correct?"]
-        R9 --> R10{User: yes / correct?}
-        R10 -->|Yes| R11[createUser - REGISTER_SUCCESS]
-        R10 -->|Correction| R9
-        R10 -->|No| R_TR[Transfer to staff]
-    end
-
-    subgraph BookFlow["Book Flow"]
-        B1{User ID?}
-        B1 -->|No| B_LOOKUP["I need to look you up first..."]
-        B1 -->|Yes| B2[getAvailability]
-        B2 --> B3["Single slot: I have {dateWords}. Is that the one you'd like to book? Multiple: list slots + Which slot? Say number or date/time"]
-        B3 --> B4[User picks slot - confirm]
-        B4 --> B5["I have {dateWords}. Is that the one you'd like to book?"]
-        B5 --> B6{User: yes/confirm/book?}
-        B6 -->|Yes| B7[createAppointment - success + BOOK_INSTRUCTIONS_BC_CARD]
-    end
-
-    subgraph RescheduleFlow["Reschedule Flow"]
-        RS1[listAppointments]
-        RS1 --> RS2["FIND_UPCOMING + list options<br/>Q: Which one would you like to reschedule? Say the option number."]
-        RS2 --> RS3[User picks option - getRescheduleOptions]
-        RS3 --> RS4["New times: {slots}. Which slot? Say number or date/time"]
-        RS4 --> RS5[User picks slot]
-        RS5 --> RS6["Got it, {dateWords}. Confirm to reschedule?"]
-        RS6 --> RS7{User: yes/confirm?}
-        RS7 -->|Yes| RS8["rescheduleAppointment - Your appointment has been rescheduled. Anything else?"]
-    end
-
-    subgraph CancelFlow["Cancel Flow"]
-        C1[getCancelOptions]
-        C1 --> C2["Your upcoming appointments: Option 1: ... Option 2: ...<br/>Q: Which one would you like to cancel? Say the option number."]
-        C2 --> C3[User picks option]
-        C3 --> C4["Q: Are you sure you'd like to cancel?"]
-        C4 --> C5{User: yes/confirm?}
-        C5 -->|Yes| C6[cancelAppointment - CANCEL_DONE]
-    end
-
-    subgraph EndNodes["End / Single-shot nodes"]
-        THANKS["thanks_end: Thank you for calling! Have a wonderful day."]
-        ADVISE["advise_911: This sounds like a medical emergency. Please hang up and call 911."]
-        REJECT["polite_rejection: This line is for appointments only. Goodbye."]
-        TRANSFER["transfer: Let me transfer you to our staff. One moment please."]
-        CLINIC["org_info: Our hours are {hours}. Is there anything else?"]
-        IDENTITY_END["identity_failed_end: The data in our systems doesn't match. Goodbye."]
-    end
+    A[normalize: caller ID] --> B[lookup: by phone]
+    B --> C{User found?}
+    C -->|Yes| D["greet_personalized<br/>Q: Hello name, thank you for calling. This is your scheduling assistant.<br/>Please confirm your date of birth to continue."]
+    C -->|No| E["greet_general<br/>Q: Thank you for calling. This is your scheduling assistant.<br/>How may I help you today?"]
+    E --> F["mention_services<br/>Q: How may I help you today - would you like to book an appointment,<br/>reschedule, cancel, or register?"]
 ```
+
+#### 2. Confirm Identity (caller ID found)
+
+```mermaid
+flowchart TB
+    G["Step: ask_are_you_name"]
+    G --> H{User says yes?}
+    H -->|Yes| I["Q: To confirm, may I have your date of birth? step: ask_dob"]
+    H -->|No / DOB in message| J[Verify DOB with LLM]
+    J -->|Match| K["CONFIRM_THEN_SERVICES: Thanks for confirming. How would you like to proceed - book, reschedule, cancel?"]
+    J -->|No match| L["DOB_VERIFY_FAIL_TRANSFER - offer register/transfer"]
+    I --> M[Verify DOB with LLM]
+    M -->|Match| K
+    M -->|No match| L
+```
+
+#### 3. Verify User (no caller ID match)
+
+```mermaid
+flowchart TB
+    V1["Q: Are you already registered with us, or is this your first time calling?"]
+    V1 --> V2{First time?}
+    V2 -->|Yes| V_REG[register_flow]
+    V2 -->|Returning| V3["Q: May I have your name please?"]
+    V3 --> V4[Search by name]
+    V4 -->|Found| V5["Q: To confirm, may I have your date of birth?"]
+    V4 -->|Not found, attempts less than 2| V6["Q: I could not find that name. Could you please spell your last name?"]
+    V6 --> V7["That's letters, correct?"]
+    V7 --> V4
+    V4 -->|Not found, attempts 2 or more| V8["Q: I can't find an existing record. Would you like to register as a new user?"]
+    V5 --> V9[Verify DOB with LLM]
+    V9 -->|Match| V_OK[Confirm then services]
+    V9 -->|No match| V10["DOB_MISMATCH_TRY_PHONE + Q: What's your phone number?"]
+    V10 --> V11[Lookup by phone]
+    V11 -->|Found| V_OK
+    V11 -->|Not found| V8
+    V8 -->|Yes| V_REG
+    V8 -->|No| V_TR["TRANSFER_LOCATE_RECORD"]
+```
+
+#### 4. Register Flow
+
+```mermaid
+flowchart TB
+    R1["Organization check: getBookingRules"]
+    R1 --> R2{Accepting?}
+    R2 -->|No| R3["Q: We're not accepting new registrations. Would you like me to add you to our waitlist?"]
+    R2 -->|Yes| R4["REGISTER_INTRO + Q: What is your full legal name?"]
+    R4 --> R5["Thanks, name. Q: What is your date of birth?"]
+    R5 --> R6["Got it, dob. Q: What is your gender?"]
+    R6 --> R7["Thanks. Q: What's the best phone number to reach you? Or: The number we have is phone. Is that the best number to reach you?"]
+    R7 --> R8["Thanks. Q: And your email address? optional"]
+    R8 --> R9["confirmRegistrationCollected: Name, DOB, Gender, Phone, Email. Q: Is everything correct?"]
+    R9 --> R10{User: yes / correct?}
+    R10 -->|Yes| R11[createUser - REGISTER_SUCCESS]
+    R10 -->|Correction| R9
+    R10 -->|No| R_TR[Transfer to staff]
+```
+
+#### 5. Book Flow
+
+```mermaid
+flowchart TB
+    B1{User ID?}
+    B1 -->|No| B_LOOKUP["I need to look you up first..."]
+    B1 -->|Yes| B2[getAvailability]
+    B2 --> B3["Single slot: I have dateWords. Is that the one you'd like to book? Multiple: list slots + Which slot? Say number or date/time"]
+    B3 --> B4[User picks slot - confirm]
+    B4 --> B5["I have dateWords. Is that the one you'd like to book?"]
+    B5 --> B6{User: yes/confirm/book?}
+    B6 -->|Yes| B7[createAppointment - success + BOOK_INSTRUCTIONS_BC_CARD]
+```
+
+#### 6. Reschedule Flow
+
+```mermaid
+flowchart TB
+    RS1[listAppointments]
+    RS1 --> RS2["FIND_UPCOMING + list options. Q: Which one would you like to reschedule? Say the option number."]
+    RS2 --> RS3[User picks option - getRescheduleOptions]
+    RS3 --> RS4["New times: slots. Which slot? Say number or date/time"]
+    RS4 --> RS5[User picks slot]
+    RS5 --> RS6["Got it, dateWords. Confirm to reschedule?"]
+    RS6 --> RS7{User: yes/confirm?}
+    RS7 -->|Yes| RS8["rescheduleAppointment - Your appointment has been rescheduled. Anything else?"]
+```
+
+#### 7. Cancel Flow
+
+```mermaid
+flowchart TB
+    C1[getCancelOptions]
+    C1 --> C2["Your upcoming appointments: Option 1, Option 2, etc. Q: Which one would you like to cancel? Say the option number."]
+    C2 --> C3[User picks option]
+    C3 --> C4["Q: Are you sure you'd like to cancel?"]
+    C4 --> C5{User: yes/confirm?}
+    C5 -->|Yes| C6[cancelAppointment - CANCEL_DONE]
+```
+
+#### 8. End / Single-shot nodes
+
+```mermaid
+flowchart LR
+    THANKS["thanks_end: Thank you for calling. Have a wonderful day."]
+    ADVISE["advise_911: This sounds like a medical emergency. Please hang up and call 911."]
+    REJECT["polite_rejection: This line is for appointments only. Goodbye."]
+    TRANSFER["transfer: Let me transfer you to our staff. One moment please."]
+    CLINIC["org_info: Our hours are hours. Is there anything else?"]
+    IDENTITY_END["identity_failed_end: The data in our systems doesn't match. Goodbye."]
+```
+
+**Note:** In diagrams 2 and 3, outcomes like "Confirm then services" and "register_flow" connect to the Book/Reschedule/Cancel flows or Register Flow respectively.
 
 ---
 
