@@ -317,6 +317,14 @@ Refer to each package’s `package.json` and env files for scripts and required 
 
 ---
 
+### Setup guides (tech stack and full instructions)
+
+For detailed tech stack, environment variables, and step-by-step setup:
+
+- **[Backend setup](docs/SETUP_BACKEND.md)** — Node, Express, Prisma, SQLite, JWT, API keys, migrations, seed, scripts.
+- **[Frontend setup](docs/SETUP_FRONTEND.md)** — React, Vite, Tailwind, Radix UI, proxy, env vars, build.
+- **[LangGraph setup](docs/SETUP_LANGGRAPH.md)** — Custom LLM server, LangGraph graph architecture, state, nodes, Azure OpenAI, Studio, backend integration, troubleshooting.
+
 ## Admin UI and authentication
 
 The frontend is an **admin dashboard** (ShadCN UI, light/dark theme) protected by username/password login.
