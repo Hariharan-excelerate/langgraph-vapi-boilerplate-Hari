@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "OpenAI-compatible chat completions endpoint backed by Azure OpenAI with resk-llm-ts security",
   "main": "dist/index.js",
+  "type": "module",
   "scripts": {
     "build": "tsc",
     "start": "tsx src/index.ts",

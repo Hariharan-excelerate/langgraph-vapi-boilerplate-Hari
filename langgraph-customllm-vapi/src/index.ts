@@ -1,11 +1,11 @@
 import "dotenv/config";
 import express, { Request, Response } from "express";
 import cors from "cors";
-import { getDefaultModel } from "./azureClient";
-import { resolveCallId, getState, setState } from "./stateStore";
-import { createInitialCallState } from "./graph/state";
-import { compiledGraph } from "./graph/graph";
-import { setApiCallLogStore, type ApiCallLog } from "./apiClient";
+import { getDefaultModel } from "./azureClient.js";
+import { resolveCallId, getState, setState } from "./stateStore.js";
+import { createInitialCallState } from "./graph/state.js";
+import { compiledGraph } from "./graph/graph.js";
+import { setApiCallLogStore, type ApiCallLog } from "./apiClient.js";
 import type { ChatCompletionMessageParam } from "openai/resources/chat/completions";
 
 const app = express();
@@ -27,9 +27,12 @@ function normalizeModel(model?: string): string {
 
 }
 
-app.post("/v1/chat/completions", async (req: Request, res: Response) => {
+
+async function handleLangGraphRequest(req: Request, res: Response) {
+  const start = Date.now();
+  console.log(`[${new Date().toISOString()}] Incoming request to ${req.path}`);
   try {
-    // console.log("req.body", req.body);
+    console.log("Request Body:", JSON.stringify(req.body, null, 2));
     const body = req.body as {
       model?: string;
       messages?: unknown;
@@ -71,14 +74,14 @@ app.post("/v1/chat/completions", async (req: Request, res: Response) => {
         messages: chatMessages,
         metadata: state.metadata
           ? {
-              ...state.metadata,
-              message_count: chatMessages.length,
-              last_updated: now,
-              state: {
-                ...state.metadata.state,
-                iteration_count: (state.metadata.state.iteration_count ?? 0) + 1,
-              },
-            }
+            ...state.metadata,
+            message_count: chatMessages.length,
+            last_updated: now,
+            state: {
+              ...state.metadata.state,
+              iteration_count: (state.metadata.state.iteration_count ?? 0) + 1,
+            },
+          }
           : state.metadata,
       };
     }
@@ -98,6 +101,9 @@ app.post("/v1/chat/completions", async (req: Request, res: Response) => {
     };
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const result = await compiledGraph.invoke(state as any, runConfig);
+    console.log(`[${new Date().toISOString()}] Graph execution completed in ${Date.now() - start}ms`);
+    console.log("Graph Result:", JSON.stringify(result, null, 2));
+
     setApiCallLogStore(null);
     if (apiCalls.length > 0 && process.env.LANGSMITH_TRACING_V2 === "true" && process.env.LANGSMITH_API_KEY) {
       try {
@@ -174,7 +180,10 @@ app.post("/v1/chat/completions", async (req: Request, res: Response) => {
 
     return sendError(res, 500, message, "internal_error");
   }
-});
+}
+
+app.post("/chat/completions", handleLangGraphRequest);
+app.post("/v1/chat/completions", handleLangGraphRequest);
 
 app.get("/", (_req: Request, res: Response) => {
   res.send("Custom LLM Server – POST /v1/chat/completions (LangGraph appointment assistant, OpenAI-compatible)");

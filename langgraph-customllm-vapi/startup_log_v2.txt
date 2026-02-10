@@ -1,0 +1,509 @@
+Server listening on port 6065
+POST /v1/chat/completions – LangGraph appointment assistant (OpenAI-compatible)
+[2026-02-10T05:10:31.647Z] Incoming request to /chat/completions
+Request Body: {
+  "messages": [
+    {
+      "role": "user",
+      "content": "hi"
+    }
+  ]
+}
+[graph][detect_intent] triggered | lastUserMessage="hi" | detected=greeting | next_action=transfer
+[chat/completions] Error: Branch condition returned unknown or null destination
+    at Branch._route (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\node_modules\@langchain\langgraph\src\graph\graph.ts:152:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async RunnableCallable.func (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\node_modules\@langchain\langgraph\src\graph\graph.ts:110:20)
+    at async RunnableCallable.invoke (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\node_modules\@langchain\langgraph\src\utils.ts:85:21)
+    at async RunnableSequence.invoke (file:///C:/Users/user/Desktop/langgraph-vapi-boilerplate-Hari/langgraph-customllm-vapi/node_modules/@langchain/core/dist/runnables/base.js:1314:27)
+    at async _runWithRetry (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\node_modules\@langchain\langgraph\src\pregel\retry.ts:102:16)
+    at async PregelRunner._executeTasksWithRetry (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\node_modules\@langchain\langgraph\src\pregel\runner.ts:348:27)
+    at async PregelRunner.tick (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\node_modules\@langchain\langgraph\src\pregel\runner.ts:132:50)
+    at async CompiledStateGraph._runLoop (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\node_modules\@langchain\langgraph\src\pregel\index.ts:2057:9)
+    at async createAndRunLoop (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\node_modules\@langchain\langgraph\src\pregel\index.ts:1942:9) {
+  pregelTaskId: '83c4ff39-a547-5632-9a44-0d32657d9a35'
+}
+[2026-02-10T05:10:41.308Z] Incoming request to /chat/completions
+Request Body: {
+  "messages": [
+    {
+      "role": "user",
+      "content": "what are the leads in 2025"
+    }
+  ]
+}
+[graph][detect_intent] triggered | lastUserMessage="what are the leads in 2025" | detected=analytics_summary | next_action=analytics_summary
+[2026-02-10T05:10:54.393Z] Graph execution completed in 13085ms
+Graph Result: {
+  "callId": "call-54-1770700241308",
+  "rawCallerPhone": null,
+  "user_id": null,
+  "current_intent": "analytics_summary",
+  "messages": [
+    {
+      "role": "user",
+      "content": "what are the leads in 2025"
+    }
+  ],
+  "assistantResponse": "817 leads were generated.",
+  "metadata": {
+    "message_count": 1,
+    "last_updated": "2026-02-10T05:10:45.249Z",
+    "state": {
+      "normalized_phone": null,
+      "user_id": null,
+      "user_name": null,
+      "is_registered": false,
+      "current_intent": "analytics_summary",
+      "previous_intent": "invalid",
+      "current_step": "intent_analytics_summary",
+      "next_action": "analytics_summary",
+      "intent_history": [
+        {
+          "intent": "analytics_summary",
+          "timestamp": "2026-02-10T05:10:45.249Z",
+          "iteration": 2
+        }
+      ],
+      "iteration_count": 2,
+      "current_flow": null,
+      "flow_data": null,
+      "registration_data": null,
+      "selected_appointment_id": null,
+      "selected_slot_id": null,
+      "_available_slots": null,
+      "_cancellable_appointments": null,
+      "org_id": null,
+      "failure_count": 0,
+      "last_error": null,
+      "is_emergency": false,
+      "is_frustrated": false,
+      "should_transfer": false,
+      "call_ended": false,
+      "rejection_count": 0,
+      "requires_user_input": true,
+      "conversation_ended": false,
+      "transfer_to_agent": false,
+      "session_started_at": "2026-02-10T05:10:41.308Z",
+      "user_dob": null,
+      "dob_attempt_count": 0,
+      "identity_confirmed": false,
+      "identity_failed_end": false,
+      "verify_step": null,
+      "name_search_attempts": 0,
+      "last_spelled_name": null,
+      "pending_intent_after_verify": null,
+      "booking_step": null,
+      "visit_type": null,
+      "appointment_type": null,
+      "reason_text": null,
+      "verify_next": null,
+      "identity_offer_register_or_transfer": null,
+      "in_flow_next_route": null,
+      "output_mode": "voiceText",
+      "analytics_summary_raw": {
+        "caseValue": {
+          "avg_case_value": "2141.3571881628118372",
+          "total_fee": "63604732.56",
+          "case_count": "29703"
+        },
+        "PipelineValue": {
+          "total_conservative_attorney_fee": "62729200.08",
+          "total_llf_attorney_fee": "875532.48"
+        },
+        "caseValues": [
+          {
+            "projected_actual_value": "200000.00",
+            "projected_future_value": "200000.00",
+            "case_phase": "0. Under Review"
+          },
+          {
+            "projected_actual_value": "100000.00",
+            "projected_future_value": "870000.00",
+            "case_phase": "1. Insurance Verification"
+          },
+          {
+            "projected_actual_value": "8200000.00",
+            "projected_future_value": "11400000.00",
+            "case_phase": "2. Treatment"
+          },
+          {
+            "projected_actual_value": "7090000.00",
+            "projected_future_value": "6710000.00",
+            "case_phase": "3. Record Request"
+          },
+          {
+            "projected_actual_value": "2100000.00",
+            "projected_future_value": "4100000.00",
+            "case_phase": "4. Demand Sent"
+          },
+          {
+            "projected_actual_value": "12780000.00",
+            "projected_future_value": "14350000.00",
+            "case_phase": "5. Negotiations"
+          },
+          {
+            "projected_actual_value": "240000.00",
+            "projected_future_value": "240000.00",
+            "case_phase": "6. Settlement"
+          },
+          {
+            "projected_actual_value": "1198668.00",
+            "projected_future_value": "1198668.00",
+            "case_phase": "7. Release"
+          },
+          {
+            "projected_actual_value": "1159666.00",
+            "projected_future_value": "1159666.00",
+            "case_phase": "8. Case Complete"
+          },
+          {
+            "projected_actual_value": "5120000.00",
+            "projected_future_value": "6073334.00",
+            "case_phase": "Disengage Completed"
+          },
+          {
+            "projected_actual_value": "8750000.00",
+            "projected_future_value": "8650000.00",
+            "case_phase": "Litigation"
+          },
+          {
+            "projected_actual_value": "2208000.00",
+            "projected_future_value": "2308000.00",
+            "case_phase": "Representation Terminated"
+          },
+          {
+            "projected_actual_value": "0.00",
+            "projected_future_value": "1480000.00",
+            "case_phase": null
+          }
+        ],
+        "litigationValue": {
+          "projected_actual_value": "8750000.00",
+          "projected_future_value": "8650000.00",
+          "count": "96"
+        },
+        "SettlementValue": {
+          "projected_actual_value": "240000.00",
+          "projected_future_value": "240000.00",
+          "count": "14"
+        },
+        "prospectCount": "817",
+        "matterCount": "29703",
+        "demandCount": "260",
+        "activeCasesCount": 325,
+        "activeCasesByPhase": {
+          "0. Under Review": 11,
+          "1. Insurance Verification": 65,
+          "2. Treatment": 91,
+          "3. Record Request": 24,
+          "4. Demand Sent": 13,
+          "5. Negotiations": 51,
+          "6. Settlement": 7,
+          "7. Release": 28,
+          "8. Case Complete": 35
+        },
+        "casePhases": {
+          "7. Release": "28",
+          "4. Demand Sent": "13",
+          "8. Case Complete": "35",
+          "Disengage Completed": "249",
+          "Unknown": "29042",
+          "3. Record Request": "24",
+          "0. Under Review": "11",
+          "2. Treatment": "91",
+          "5. Negotiations": "51",
+          "Representation Terminated": "39",
+          "6. Settlement": "7",
+          "Litigation": "48",
+          "1. Insurance Verification": "65"
+        },
+        "treatmentLevels": {
+          "MRI & TBI DONE": "1",
+          "ORTHO EVAL DONE": "37",
+          "RFA & SURGERY DONE": "2",
+          "NO MRI": "29495",
+          "INJECTION & TBI DONE": "1",
+          "INJECTION DONE": "42",
+          "SURGERY DONE": "11",
+          "MRI DONE": "89",
+          "RFA & TBI DONE": "1",
+          "RFA DONE": "24"
+        }
+      },
+      "active_cases_raw": null,
+      "analytics_time_range": {
+        "from": "2025-01-01",
+        "to": "2025-12-31"
+      },
+      "voice_output": "817 leads were generated.",
+      "text_output": "817 Leads Generated"
+    }
+  },
+  "user": null
+}
+[2026-02-10T05:12:52.605Z] Incoming request to /chat/completions
+Request Body: {
+  "messages": [
+    {
+      "role": "user",
+      "content": "hi"
+    }
+  ]
+}
+[graph][detect_intent] triggered | lastUserMessage="hi" | detected=greeting | next_action=transfer
+[chat/completions] Error: Branch condition returned unknown or null destination
+    at Branch._route (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\node_modules\@langchain\langgraph\src\graph\graph.ts:152:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async RunnableCallable.func (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\node_modules\@langchain\langgraph\src\graph\graph.ts:110:20)
+    at async RunnableCallable.invoke (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\node_modules\@langchain\langgraph\src\utils.ts:85:21)
+    at async RunnableSequence.invoke (file:///C:/Users/user/Desktop/langgraph-vapi-boilerplate-Hari/langgraph-customllm-vapi/node_modules/@langchain/core/dist/runnables/base.js:1314:27)
+    at async _runWithRetry (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\node_modules\@langchain\langgraph\src\pregel\retry.ts:102:16)
+    at async PregelRunner._executeTasksWithRetry (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\node_modules\@langchain\langgraph\src\pregel\runner.ts:348:27)
+    at async PregelRunner.tick (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\node_modules\@langchain\langgraph\src\pregel\runner.ts:132:50)
+    at async CompiledStateGraph._runLoop (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\node_modules\@langchain\langgraph\src\pregel\index.ts:2057:9)
+    at async createAndRunLoop (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\node_modules\@langchain\langgraph\src\pregel\index.ts:1942:9) {
+  pregelTaskId: 'cb049854-98e2-5914-8022-806dd086883d'
+}
+[2026-02-10T05:12:59.316Z] Incoming request to /chat/completions
+Request Body: {
+  "messages": [
+    {
+      "role": "user",
+      "content": "what are the leads in 2025"
+    }
+  ]
+}
+[graph][detect_intent] triggered | lastUserMessage="what are the leads in 2025" | detected=analytics_summary | next_action=analytics_summary
+[2026-02-10T05:13:08.217Z] Graph execution completed in 8901ms
+Graph Result: {
+  "callId": "call-54-1770700379316",
+  "rawCallerPhone": null,
+  "user_id": null,
+  "current_intent": "analytics_summary",
+  "messages": [
+    {
+      "role": "user",
+      "content": "what are the leads in 2025"
+    }
+  ],
+  "assistantResponse": "817 leads were generated.",
+  "metadata": {
+    "message_count": 1,
+    "last_updated": "2026-02-10T05:12:59.891Z",
+    "state": {
+      "normalized_phone": null,
+      "user_id": null,
+      "user_name": null,
+      "is_registered": false,
+      "current_intent": "analytics_summary",
+      "previous_intent": "invalid",
+      "current_step": "intent_analytics_summary",
+      "next_action": "analytics_summary",
+      "intent_history": [
+        {
+          "intent": "analytics_summary",
+          "timestamp": "2026-02-10T05:12:59.891Z",
+          "iteration": 2
+        }
+      ],
+      "iteration_count": 2,
+      "current_flow": null,
+      "flow_data": null,
+      "registration_data": null,
+      "selected_appointment_id": null,
+      "selected_slot_id": null,
+      "_available_slots": null,
+      "_cancellable_appointments": null,
+      "org_id": null,
+      "failure_count": 0,
+      "last_error": null,
+      "is_emergency": false,
+      "is_frustrated": false,
+      "should_transfer": false,
+      "call_ended": false,
+      "rejection_count": 0,
+      "requires_user_input": true,
+      "conversation_ended": false,
+      "transfer_to_agent": false,
+      "session_started_at": "2026-02-10T05:12:59.316Z",
+      "user_dob": null,
+      "dob_attempt_count": 0,
+      "identity_confirmed": false,
+      "identity_failed_end": false,
+      "verify_step": null,
+      "name_search_attempts": 0,
+      "last_spelled_name": null,
+      "pending_intent_after_verify": null,
+      "booking_step": null,
+      "visit_type": null,
+      "appointment_type": null,
+      "reason_text": null,
+      "verify_next": null,
+      "identity_offer_register_or_transfer": null,
+      "in_flow_next_route": null,
+      "output_mode": "voiceText",
+      "analytics_summary_raw": {
+        "caseValue": {
+          "avg_case_value": "2141.3571881628118372",
+          "total_fee": "63604732.56",
+          "case_count": "29703"
+        },
+        "PipelineValue": {
+          "total_conservative_attorney_fee": "62729200.08",
+          "total_llf_attorney_fee": "875532.48"
+        },
+        "caseValues": [
+          {
+            "projected_actual_value": "200000.00",
+            "projected_future_value": "200000.00",
+            "case_phase": "0. Under Review"
+          },
+          {
+            "projected_actual_value": "100000.00",
+            "projected_future_value": "870000.00",
+            "case_phase": "1. Insurance Verification"
+          },
+          {
+            "projected_actual_value": "8200000.00",
+            "projected_future_value": "11400000.00",
+            "case_phase": "2. Treatment"
+          },
+          {
+            "projected_actual_value": "7090000.00",
+            "projected_future_value": "6710000.00",
+            "case_phase": "3. Record Request"
+          },
+          {
+            "projected_actual_value": "2100000.00",
+            "projected_future_value": "4100000.00",
+            "case_phase": "4. Demand Sent"
+          },
+          {
+            "projected_actual_value": "12780000.00",
+            "projected_future_value": "14350000.00",
+            "case_phase": "5. Negotiations"
+          },
+          {
+            "projected_actual_value": "240000.00",
+            "projected_future_value": "240000.00",
+            "case_phase": "6. Settlement"
+          },
+          {
+            "projected_actual_value": "1198668.00",
+            "projected_future_value": "1198668.00",
+            "case_phase": "7. Release"
+          },
+          {
+            "projected_actual_value": "1159666.00",
+            "projected_future_value": "1159666.00",
+            "case_phase": "8. Case Complete"
+          },
+          {
+            "projected_actual_value": "5120000.00",
+            "projected_future_value": "6073334.00",
+            "case_phase": "Disengage Completed"
+          },
+          {
+            "projected_actual_value": "8750000.00",
+            "projected_future_value": "8650000.00",
+            "case_phase": "Litigation"
+          },
+          {
+            "projected_actual_value": "2208000.00",
+            "projected_future_value": "2308000.00",
+            "case_phase": "Representation Terminated"
+          },
+          {
+            "projected_actual_value": "0.00",
+            "projected_future_value": "1480000.00",
+            "case_phase": null
+          }
+        ],
+        "litigationValue": {
+          "projected_actual_value": "8750000.00",
+          "projected_future_value": "8650000.00",
+          "count": "96"
+        },
+        "SettlementValue": {
+          "projected_actual_value": "240000.00",
+          "projected_future_value": "240000.00",
+          "count": "14"
+        },
+        "prospectCount": "817",
+        "matterCount": "29703",
+        "demandCount": "260",
+        "activeCasesCount": 325,
+        "activeCasesByPhase": {
+          "0. Under Review": 11,
+          "1. Insurance Verification": 65,
+          "2. Treatment": 91,
+          "3. Record Request": 24,
+          "4. Demand Sent": 13,
+          "5. Negotiations": 51,
+          "6. Settlement": 7,
+          "7. Release": 28,
+          "8. Case Complete": 35
+        },
+        "casePhases": {
+          "7. Release": "28",
+          "4. Demand Sent": "13",
+          "8. Case Complete": "35",
+          "Disengage Completed": "249",
+          "Unknown": "29042",
+          "3. Record Request": "24",
+          "0. Under Review": "11",
+          "2. Treatment": "91",
+          "5. Negotiations": "51",
+          "Representation Terminated": "39",
+          "6. Settlement": "7",
+          "1. Insurance Verification": "65",
+          "Litigation": "48"
+        },
+        "treatmentLevels": {
+          "MRI & TBI DONE": "1",
+          "ORTHO EVAL DONE": "37",
+          "RFA & SURGERY DONE": "2",
+          "NO MRI": "29495",
+          "INJECTION & TBI DONE": "1",
+          "INJECTION DONE": "42",
+          "SURGERY DONE": "11",
+          "MRI DONE": "89",
+          "RFA & TBI DONE": "1",
+          "RFA DONE": "24"
+        }
+      },
+      "active_cases_raw": null,
+      "analytics_time_range": {
+        "from": "2025-01-01",
+        "to": "2025-12-31"
+      },
+      "voice_output": "817 leads were generated.",
+      "text_output": "817 Leads Generated"
+    }
+  },
+  "user": null
+}
+[2026-02-10T05:13:28.086Z] Incoming request to /chat/completions
+Request Body: {
+  "messages": [
+    {
+      "role": "user",
+      "content": "hi"
+    }
+  ]
+}
+[graph][detect_intent] triggered | lastUserMessage="hi" | detected=greeting | next_action=transfer
+[chat/completions] Error: Branch condition returned unknown or null destination
+    at Branch._route (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\node_modules\@langchain\langgraph\src\graph\graph.ts:152:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async RunnableCallable.func (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\node_modules\@langchain\langgraph\src\graph\graph.ts:110:20)
+    at async RunnableCallable.invoke (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\node_modules\@langchain\langgraph\src\utils.ts:85:21)
+    at async RunnableSequence.invoke (file:///C:/Users/user/Desktop/langgraph-vapi-boilerplate-Hari/langgraph-customllm-vapi/node_modules/@langchain/core/dist/runnables/base.js:1314:27)
+    at async _runWithRetry (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\node_modules\@langchain\langgraph\src\pregel\retry.ts:102:16)
+    at async PregelRunner._executeTasksWithRetry (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\node_modules\@langchain\langgraph\src\pregel\runner.ts:348:27)
+    at async PregelRunner.tick (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\node_modules\@langchain\langgraph\src\pregel\runner.ts:132:50)
+    at async CompiledStateGraph._runLoop (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\node_modules\@langchain\langgraph\src\pregel\index.ts:2057:9)
+    at async createAndRunLoop (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\node_modules\@langchain\langgraph\src\pregel\index.ts:1942:9) {
+  pregelTaskId: '6d83f5a4-c387-54f3-bca9-3bfa0905aef3'
+}

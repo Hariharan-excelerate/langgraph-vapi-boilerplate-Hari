@@ -77,6 +77,15 @@ export interface CallStateInner {
   identity_offer_register_or_transfer: "offered" | "yes" | "no" | null;
   /** After in-flow intent check (reschedule/cancel): where to route (reschedule_flow, cancel_flow, book_flow, etc.). */
   in_flow_next_route: string | null;
+  // Output mode control
+  output_mode: "voice" | "text" | "voiceText" | null;
+  // Analytics data
+  analytics_summary_raw: any | null;
+  active_cases_raw: unknown | null;
+  analytics_time_range: { from: string; to: string } | null;
+  // Synthesizer outputs
+  voice_output: string | null;
+  text_output: string | null;
 }
 
 export interface MetadataState {
@@ -147,6 +156,12 @@ function defaultCallStateInner(sessionStartedAt: string): CallStateInner {
     verify_next: null,
     identity_offer_register_or_transfer: null,
     in_flow_next_route: null,
+    output_mode: "voiceText",
+    analytics_summary_raw: null,
+    active_cases_raw: null,
+    analytics_time_range: null,
+    voice_output: null,
+    text_output: null,
   };
 }
 

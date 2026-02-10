@@ -1,0 +1,983 @@
+Server listening on port 6065
+POST /v1/chat/completions – LangGraph appointment assistant (OpenAI-compatible)
+[2026-02-10T05:47:29.575Z] Incoming request to /chat/completions
+Request Body: {
+  "messages": [
+    {
+      "role": "user",
+      "content": "what are the leads generated"
+    }
+  ]
+}
+[graph][detect_intent] triggered | lastUserMessage="what are the leads generated" | detected=analytics_summary | next_action=analytics_summary
+[2026-02-10T05:47:31.214Z] Graph execution completed in 1639ms
+Graph Result: {
+  "callId": "call-56-1770702449577",
+  "rawCallerPhone": null,
+  "user_id": null,
+  "current_intent": "analytics_summary",
+  "messages": [
+    {
+      "role": "user",
+      "content": "what are the leads generated"
+    }
+  ],
+  "assistantResponse": "I can help with that. Could you please specify which specific year or time period you're interested in?",
+  "metadata": {
+    "message_count": 1,
+    "last_updated": "2026-02-10T05:47:30.481Z",
+    "state": {
+      "normalized_phone": null,
+      "user_id": null,
+      "user_name": null,
+      "is_registered": false,
+      "current_intent": "analytics_summary",
+      "previous_intent": "invalid",
+      "current_step": "intent_analytics_summary",
+      "next_action": "analytics_summary",
+      "intent_history": [
+        {
+          "intent": "analytics_summary",
+          "timestamp": "2026-02-10T05:47:30.481Z",
+          "iteration": 2
+        }
+      ],
+      "iteration_count": 2,
+      "current_flow": null,
+      "flow_data": null,
+      "registration_data": null,
+      "selected_appointment_id": null,
+      "selected_slot_id": null,
+      "_available_slots": null,
+      "_cancellable_appointments": null,
+      "org_id": null,
+      "failure_count": 0,
+      "last_error": null,
+      "is_emergency": false,
+      "is_frustrated": false,
+      "should_transfer": false,
+      "call_ended": false,
+      "rejection_count": 0,
+      "requires_user_input": true,
+      "conversation_ended": false,
+      "transfer_to_agent": false,
+      "session_started_at": "2026-02-10T05:47:29.577Z",
+      "user_dob": null,
+      "dob_attempt_count": 0,
+      "identity_confirmed": false,
+      "identity_failed_end": false,
+      "verify_step": null,
+      "name_search_attempts": 0,
+      "last_spelled_name": null,
+      "pending_intent_after_verify": null,
+      "booking_step": null,
+      "visit_type": null,
+      "appointment_type": null,
+      "reason_text": null,
+      "verify_next": null,
+      "identity_offer_register_or_transfer": null,
+      "in_flow_next_route": null,
+      "output_mode": "voiceText",
+      "analytics_summary_raw": {
+        "missing_context": true
+      },
+      "active_cases_raw": null,
+      "analytics_time_range": null,
+      "voice_output": "I can help with that. Could you please specify which specific year or time period you're interested in?",
+      "text_output": "I can help with that. Could you please specify which specific year or time period you're interested in?"
+    }
+  },
+  "user": null
+}
+[2026-02-10T05:48:09.772Z] Incoming request to /chat/completions
+Request Body: {
+  "call": {
+    "id": "test-ctx-1"
+  },
+  "messages": [
+    {
+      "role": "user",
+      "content": "what are the leads"
+    }
+  ]
+}
+[graph][detect_intent] triggered | lastUserMessage="what are the leads" | detected=analytics_summary | next_action=analytics_summary
+[2026-02-10T05:48:11.401Z] Graph execution completed in 1629ms
+Graph Result: {
+  "callId": "test-ctx-1",
+  "rawCallerPhone": null,
+  "user_id": null,
+  "current_intent": "analytics_summary",
+  "messages": [
+    {
+      "role": "user",
+      "content": "what are the leads"
+    }
+  ],
+  "assistantResponse": "I can help with that. Could you please specify which specific year or time period you're interested in?",
+  "metadata": {
+    "message_count": 1,
+    "last_updated": "2026-02-10T05:48:10.674Z",
+    "state": {
+      "normalized_phone": null,
+      "user_id": null,
+      "user_name": null,
+      "is_registered": false,
+      "current_intent": "analytics_summary",
+      "previous_intent": "invalid",
+      "current_step": "intent_analytics_summary",
+      "next_action": "analytics_summary",
+      "intent_history": [
+        {
+          "intent": "analytics_summary",
+          "timestamp": "2026-02-10T05:48:10.674Z",
+          "iteration": 2
+        }
+      ],
+      "iteration_count": 2,
+      "current_flow": null,
+      "flow_data": null,
+      "registration_data": null,
+      "selected_appointment_id": null,
+      "selected_slot_id": null,
+      "_available_slots": null,
+      "_cancellable_appointments": null,
+      "org_id": null,
+      "failure_count": 0,
+      "last_error": null,
+      "is_emergency": false,
+      "is_frustrated": false,
+      "should_transfer": false,
+      "call_ended": false,
+      "rejection_count": 0,
+      "requires_user_input": true,
+      "conversation_ended": false,
+      "transfer_to_agent": false,
+      "session_started_at": "2026-02-10T05:48:09.772Z",
+      "user_dob": null,
+      "dob_attempt_count": 0,
+      "identity_confirmed": false,
+      "identity_failed_end": false,
+      "verify_step": null,
+      "name_search_attempts": 0,
+      "last_spelled_name": null,
+      "pending_intent_after_verify": null,
+      "booking_step": null,
+      "visit_type": null,
+      "appointment_type": null,
+      "reason_text": null,
+      "verify_next": null,
+      "identity_offer_register_or_transfer": null,
+      "in_flow_next_route": null,
+      "output_mode": "voiceText",
+      "analytics_summary_raw": {
+        "missing_context": true
+      },
+      "active_cases_raw": null,
+      "analytics_time_range": null,
+      "voice_output": "I can help with that. Could you please specify which specific year or time period you're interested in?",
+      "text_output": "I can help with that. Could you please specify which specific year or time period you're interested in?"
+    }
+  },
+  "user": null
+}
+[2026-02-10T05:48:17.752Z] Incoming request to /chat/completions
+Request Body: {
+  "call": {
+    "id": "test-ctx-1"
+  },
+  "messages": [
+    {
+      "role": "user",
+      "content": "2025"
+    }
+  ]
+}
+[graph][detect_intent] triggered | lastUserMessage="2025" | detected=analytics_summary | next_action=analytics_summary
+[2026-02-10T05:48:22.525Z] Graph execution completed in 4773ms
+Graph Result: {
+  "callId": "test-ctx-1",
+  "rawCallerPhone": null,
+  "user_id": null,
+  "current_intent": "analytics_summary",
+  "messages": [
+    {
+      "role": "user",
+      "content": "2025"
+    }
+  ],
+  "assistantResponse": "There were 29,703 retainers signed in 2025.",
+  "metadata": {
+    "message_count": 1,
+    "last_updated": "2026-02-10T05:48:18.640Z",
+    "state": {
+      "normalized_phone": null,
+      "user_id": null,
+      "user_name": null,
+      "is_registered": false,
+      "current_intent": "analytics_summary",
+      "previous_intent": "analytics_summary",
+      "current_step": "intent_analytics_summary",
+      "next_action": "analytics_summary",
+      "intent_history": [
+        {
+          "intent": "analytics_summary",
+          "timestamp": "2026-02-10T05:48:10.674Z",
+          "iteration": 2
+        },
+        {
+          "intent": "analytics_summary",
+          "timestamp": "2026-02-10T05:48:18.640Z",
+          "iteration": 4
+        }
+      ],
+      "iteration_count": 4,
+      "current_flow": null,
+      "flow_data": null,
+      "registration_data": null,
+      "selected_appointment_id": null,
+      "selected_slot_id": null,
+      "_available_slots": null,
+      "_cancellable_appointments": null,
+      "org_id": null,
+      "failure_count": 0,
+      "last_error": null,
+      "is_emergency": false,
+      "is_frustrated": false,
+      "should_transfer": false,
+      "call_ended": false,
+      "rejection_count": 0,
+      "requires_user_input": true,
+      "conversation_ended": false,
+      "transfer_to_agent": false,
+      "session_started_at": "2026-02-10T05:48:09.772Z",
+      "user_dob": null,
+      "dob_attempt_count": 0,
+      "identity_confirmed": false,
+      "identity_failed_end": false,
+      "verify_step": null,
+      "name_search_attempts": 0,
+      "last_spelled_name": null,
+      "pending_intent_after_verify": null,
+      "booking_step": null,
+      "visit_type": null,
+      "appointment_type": null,
+      "reason_text": null,
+      "verify_next": null,
+      "identity_offer_register_or_transfer": null,
+      "in_flow_next_route": null,
+      "output_mode": "voiceText",
+      "analytics_summary_raw": {
+        "caseValue": {
+          "avg_case_value": "2141.3571881628118372",
+          "total_fee": "63604732.56",
+          "case_count": "29703"
+        },
+        "PipelineValue": {
+          "total_conservative_attorney_fee": "62729200.08",
+          "total_llf_attorney_fee": "875532.48"
+        },
+        "caseValues": [
+          {
+            "projected_actual_value": "200000.00",
+            "projected_future_value": "200000.00",
+            "case_phase": "0. Under Review"
+          },
+          {
+            "projected_actual_value": "100000.00",
+            "projected_future_value": "870000.00",
+            "case_phase": "1. Insurance Verification"
+          },
+          {
+            "projected_actual_value": "8200000.00",
+            "projected_future_value": "11400000.00",
+            "case_phase": "2. Treatment"
+          },
+          {
+            "projected_actual_value": "7090000.00",
+            "projected_future_value": "6710000.00",
+            "case_phase": "3. Record Request"
+          },
+          {
+            "projected_actual_value": "2100000.00",
+            "projected_future_value": "4100000.00",
+            "case_phase": "4. Demand Sent"
+          },
+          {
+            "projected_actual_value": "12780000.00",
+            "projected_future_value": "14350000.00",
+            "case_phase": "5. Negotiations"
+          },
+          {
+            "projected_actual_value": "240000.00",
+            "projected_future_value": "240000.00",
+            "case_phase": "6. Settlement"
+          },
+          {
+            "projected_actual_value": "1198668.00",
+            "projected_future_value": "1198668.00",
+            "case_phase": "7. Release"
+          },
+          {
+            "projected_actual_value": "1159666.00",
+            "projected_future_value": "1159666.00",
+            "case_phase": "8. Case Complete"
+          },
+          {
+            "projected_actual_value": "5120000.00",
+            "projected_future_value": "6073334.00",
+            "case_phase": "Disengage Completed"
+          },
+          {
+            "projected_actual_value": "8750000.00",
+            "projected_future_value": "8650000.00",
+            "case_phase": "Litigation"
+          },
+          {
+            "projected_actual_value": "2208000.00",
+            "projected_future_value": "2308000.00",
+            "case_phase": "Representation Terminated"
+          },
+          {
+            "projected_actual_value": "0.00",
+            "projected_future_value": "1480000.00",
+            "case_phase": null
+          }
+        ],
+        "litigationValue": {
+          "projected_actual_value": "8750000.00",
+          "projected_future_value": "8650000.00",
+          "count": "96"
+        },
+        "SettlementValue": {
+          "projected_actual_value": "240000.00",
+          "projected_future_value": "240000.00",
+          "count": "14"
+        },
+        "prospectCount": "817",
+        "matterCount": "29703",
+        "demandCount": "260",
+        "activeCasesCount": 325,
+        "activeCasesByPhase": {
+          "0. Under Review": 11,
+          "1. Insurance Verification": 65,
+          "2. Treatment": 91,
+          "3. Record Request": 24,
+          "4. Demand Sent": 13,
+          "5. Negotiations": 51,
+          "6. Settlement": 7,
+          "7. Release": 28,
+          "8. Case Complete": 35
+        },
+        "casePhases": {
+          "7. Release": "28",
+          "4. Demand Sent": "13",
+          "8. Case Complete": "35",
+          "Disengage Completed": "249",
+          "Unknown": "29042",
+          "3. Record Request": "24",
+          "0. Under Review": "11",
+          "2. Treatment": "91",
+          "5. Negotiations": "51",
+          "Representation Terminated": "39",
+          "6. Settlement": "7",
+          "Litigation": "48",
+          "1. Insurance Verification": "65"
+        },
+        "treatmentLevels": {
+          "MRI & TBI DONE": "1",
+          "ORTHO EVAL DONE": "37",
+          "RFA & SURGERY DONE": "2",
+          "NO MRI": "29495",
+          "INJECTION & TBI DONE": "1",
+          "INJECTION DONE": "42",
+          "SURGERY DONE": "11",
+          "MRI DONE": "89",
+          "RFA & TBI DONE": "1",
+          "RFA DONE": "24"
+        }
+      },
+      "active_cases_raw": null,
+      "analytics_time_range": {
+        "from": "2025-01-01",
+        "to": "2025-12-31"
+      },
+      "voice_output": "There were 29,703 retainers signed in 2025.",
+      "text_output": "### 2025 Data Summary\n- **Retainers Signed**: 29,703"
+    }
+  },
+  "user": null
+}
+[2026-02-10T05:49:32.902Z] Incoming request to /chat/completions
+Request Body: {
+  "call": {
+    "id": "test-ctx-1"
+  },
+  "messages": [
+    {
+      "role": "user",
+      "content": "and retainers?"
+    }
+  ]
+}
+[graph][detect_intent] triggered | lastUserMessage="and retainers?" | detected=active_cases | next_action=active_cases
+[2026-02-10T05:49:36.577Z] Graph execution completed in 3675ms
+Graph Result: {
+  "callId": "test-ctx-1",
+  "rawCallerPhone": null,
+  "user_id": null,
+  "current_intent": "active_cases",
+  "messages": [
+    {
+      "role": "user",
+      "content": "and retainers?"
+    }
+  ],
+  "assistantResponse": "29,703 retainers were signed.",
+  "metadata": {
+    "message_count": 1,
+    "last_updated": "2026-02-10T05:49:33.707Z",
+    "state": {
+      "normalized_phone": null,
+      "user_id": null,
+      "user_name": null,
+      "is_registered": false,
+      "current_intent": "active_cases",
+      "previous_intent": "analytics_summary",
+      "current_step": "intent_active_cases",
+      "next_action": "active_cases",
+      "intent_history": [
+        {
+          "intent": "analytics_summary",
+          "timestamp": "2026-02-10T05:48:10.674Z",
+          "iteration": 2
+        },
+        {
+          "intent": "analytics_summary",
+          "timestamp": "2026-02-10T05:48:18.640Z",
+          "iteration": 4
+        },
+        {
+          "intent": "active_cases",
+          "timestamp": "2026-02-10T05:49:33.707Z",
+          "iteration": 6
+        }
+      ],
+      "iteration_count": 6,
+      "current_flow": null,
+      "flow_data": null,
+      "registration_data": null,
+      "selected_appointment_id": null,
+      "selected_slot_id": null,
+      "_available_slots": null,
+      "_cancellable_appointments": null,
+      "org_id": null,
+      "failure_count": 0,
+      "last_error": null,
+      "is_emergency": false,
+      "is_frustrated": false,
+      "should_transfer": false,
+      "call_ended": false,
+      "rejection_count": 0,
+      "requires_user_input": true,
+      "conversation_ended": false,
+      "transfer_to_agent": false,
+      "session_started_at": "2026-02-10T05:48:09.772Z",
+      "user_dob": null,
+      "dob_attempt_count": 0,
+      "identity_confirmed": false,
+      "identity_failed_end": false,
+      "verify_step": null,
+      "name_search_attempts": 0,
+      "last_spelled_name": null,
+      "pending_intent_after_verify": null,
+      "booking_step": null,
+      "visit_type": null,
+      "appointment_type": null,
+      "reason_text": null,
+      "verify_next": null,
+      "identity_offer_register_or_transfer": null,
+      "in_flow_next_route": null,
+      "output_mode": "voiceText",
+      "analytics_summary_raw": {
+        "caseValue": {
+          "avg_case_value": "2141.3571881628118372",
+          "total_fee": "63604732.56",
+          "case_count": "29703"
+        },
+        "PipelineValue": {
+          "total_conservative_attorney_fee": "62729200.08",
+          "total_llf_attorney_fee": "875532.48"
+        },
+        "caseValues": [
+          {
+            "projected_actual_value": "200000.00",
+            "projected_future_value": "200000.00",
+            "case_phase": "0. Under Review"
+          },
+          {
+            "projected_actual_value": "100000.00",
+            "projected_future_value": "870000.00",
+            "case_phase": "1. Insurance Verification"
+          },
+          {
+            "projected_actual_value": "8200000.00",
+            "projected_future_value": "11400000.00",
+            "case_phase": "2. Treatment"
+          },
+          {
+            "projected_actual_value": "7090000.00",
+            "projected_future_value": "6710000.00",
+            "case_phase": "3. Record Request"
+          },
+          {
+            "projected_actual_value": "2100000.00",
+            "projected_future_value": "4100000.00",
+            "case_phase": "4. Demand Sent"
+          },
+          {
+            "projected_actual_value": "12780000.00",
+            "projected_future_value": "14350000.00",
+            "case_phase": "5. Negotiations"
+          },
+          {
+            "projected_actual_value": "240000.00",
+            "projected_future_value": "240000.00",
+            "case_phase": "6. Settlement"
+          },
+          {
+            "projected_actual_value": "1198668.00",
+            "projected_future_value": "1198668.00",
+            "case_phase": "7. Release"
+          },
+          {
+            "projected_actual_value": "1159666.00",
+            "projected_future_value": "1159666.00",
+            "case_phase": "8. Case Complete"
+          },
+          {
+            "projected_actual_value": "5120000.00",
+            "projected_future_value": "6073334.00",
+            "case_phase": "Disengage Completed"
+          },
+          {
+            "projected_actual_value": "8750000.00",
+            "projected_future_value": "8650000.00",
+            "case_phase": "Litigation"
+          },
+          {
+            "projected_actual_value": "2208000.00",
+            "projected_future_value": "2308000.00",
+            "case_phase": "Representation Terminated"
+          },
+          {
+            "projected_actual_value": "0.00",
+            "projected_future_value": "1480000.00",
+            "case_phase": null
+          }
+        ],
+        "litigationValue": {
+          "projected_actual_value": "8750000.00",
+          "projected_future_value": "8650000.00",
+          "count": "96"
+        },
+        "SettlementValue": {
+          "projected_actual_value": "240000.00",
+          "projected_future_value": "240000.00",
+          "count": "14"
+        },
+        "prospectCount": "817",
+        "matterCount": "29703",
+        "demandCount": "260",
+        "activeCasesCount": 325,
+        "activeCasesByPhase": {
+          "0. Under Review": 11,
+          "1. Insurance Verification": 65,
+          "2. Treatment": 91,
+          "3. Record Request": 24,
+          "4. Demand Sent": 13,
+          "5. Negotiations": 51,
+          "6. Settlement": 7,
+          "7. Release": 28,
+          "8. Case Complete": 35
+        },
+        "casePhases": {
+          "7. Release": "28",
+          "4. Demand Sent": "13",
+          "8. Case Complete": "35",
+          "Disengage Completed": "249",
+          "Unknown": "29042",
+          "3. Record Request": "24",
+          "0. Under Review": "11",
+          "2. Treatment": "91",
+          "5. Negotiations": "51",
+          "Representation Terminated": "39",
+          "6. Settlement": "7",
+          "Litigation": "48",
+          "1. Insurance Verification": "65"
+        },
+        "treatmentLevels": {
+          "MRI & TBI DONE": "1",
+          "ORTHO EVAL DONE": "37",
+          "RFA & SURGERY DONE": "2",
+          "NO MRI": "29495",
+          "INJECTION & TBI DONE": "1",
+          "INJECTION DONE": "42",
+          "SURGERY DONE": "11",
+          "MRI DONE": "89",
+          "RFA & TBI DONE": "1",
+          "RFA DONE": "24"
+        }
+      },
+      "active_cases_raw": {
+        "success": true,
+        "data": [
+          {
+            "projection_id": "a45UR000002YKpZYAW",
+            "matter_link": "a0OUR000007kMpV2AU",
+            "projection_name": "P-173466",
+            "projection_created_date": "2025-01-02T21:33:24.000Z",
+            "projected_actual_value": "0.00",
+            "projected_future_value": "0.00",
+            "projection_matter_phase": "8. Case Complete",
+            "matter_id": "a0OUR000007kMpV2AU",
+            "matter_name": "Rosemonde Dorneval 8/18/2024",
+            "matter_created_date": "2025-01-02T21:33:21.000Z",
+            "matter_phase": "8. Case Complete",
+            "legal_case_id": null,
+            "case_code": null,
+            "case_type": "Personal Injury",
+            "litigation_stage": "Presuit",
+            "client_name": "Rosemonde Dorneval",
+            "case_open_date": "2024-09-04",
+            "accident_timestamp": "2024-08-19T02:12:00.000Z",
+            "statute_of_limitations": "2026-08-18",
+            "first_demand_date": null,
+            "first_offer_date": null,
+            "disengagement_date": null,
+            "case_law_status": "New",
+            "internal_case_status": "9. Case Complete",
+            "tbi_status": "PENDING TBI Decision",
+            "priority_rating": "6.00",
+            "latest_offer_amount": "0.00",
+            "earliest_offer_amount": null,
+            "valuation_low": "10000.00",
+            "valuation_high": "0.00",
+            "total_settlement_amount": null
+          },
+          {
+            "projection_id": "a45UR000002YKpaYAG",
+            "matter_link": "a0OUR000007kMpV2AU",
+            "projection_name": "P-173467",
+            "projection_created_date": "2025-01-02T21:33:24.000Z",
+            "projected_actual_value": "0.00",
+            "projected_future_value": "0.00",
+            "projection_matter_phase": "8. Case Complete",
+            "matter_id": "a0OUR000007kMpV2AU",
+            "matter_name": "Rosemonde Dorneval 8/18/2024",
+            "matter_created_date": "2025-01-02T21:33:21.000Z",
+            "matter_phase": "8. Case Complete",
+            "legal_case_id": null,
+            "case_code": null,
+            "case_type": "Personal Injury",
+            "litigation_stage": "Presuit",
+            "client_name": "Rosemonde Dorneval",
+            "case_open_date": "2024-09-04",
+            "accident_timestamp": "2024-08-19T02:12:00.000Z",
+            "statute_of_limitations": "2026-08-18",
+            "first_demand_date": null,
+            "first_offer_date": null,
+            "disengagement_date": null,
+            "case_law_status": "New",
+            "internal_case_status": "9. Case Complete",
+            "tbi_status": "PENDING TBI Decision",
+            "priority_rating": "6.00",
+            "latest_offer_amount": "0.00",
+            "earliest_offer_amount": null,
+            "valuation_low": "10000.00",
+            "valuation_high": "0.00",
+            "total_settlement_amount": null
+          },
+          {
+            "projection_id": "a45UR000002ZLRpYAO",
+            "matter_link": "a0OUR000007odwb2AA",
+            "projection_name": "P-173474",
+            "projection_created_date": "2025-01-07T13:39:54.000Z",
+            "projected_actual_value": "0.00",
+            "projected_future_value": "0.00",
+            "projection_matter_phase": "8. Case Complete",
+            "matter_id": "a0OUR000007odwb2AA",
+            "matter_name": "Marie Merilus 4/3/2024 GJL",
+            "matter_created_date": "2025-01-07T13:39:52.000Z",
+            "matter_phase": "8. Case Complete",
+            "legal_case_id": null,
+            "case_code": null,
+            "case_type": "Personal Injury",
+            "litigation_stage": "Presuit",
+            "client_name": "Marie Merilus",
+            "case_open_date": "2024-09-04",
+            "accident_timestamp": "2024-04-03T16:00:00.000Z",
+            "statute_of_limitations": "2026-04-03",
+            "first_demand_date": null,
+            "first_offer_date": null,
+            "disengagement_date": null,
+            "case_law_status": "New",
+            "internal_case_status": "9. Case Complete",
+            "tbi_status": "PENDING TBI Decision",
+            "priority_rating": "8.00",
+            "latest_offer_amount": "0.00",
+            "earliest_offer_amount": null,
+            "valuation_low": "25000.00",
+            "valuation_high": "0.00",
+            "total_settlement_amount": null
+          },
+          {
+            "projection_id": "a45UR000002ZLRqYAO",
+            "matter_link": "a0OUR000007odwb2AA",
+            "projection_name": "P-173475",
+            "projection_created_date": "2025-01-07T13:39:54.000Z",
+            "projected_actual_value": "0.00",
+            "projected_future_value": "0.00",
+            "projection_matter_phase": "8. Case Complete",
+            "matter_id": "a0OUR000007odwb2AA",
+            "matter_name": "Marie Merilus 4/3/2024 GJL",
+            "matter_created_date": "2025-01-07T13:39:52.000Z",
+            "matter_phase": "8. Case Complete",
+            "legal_case_id": null,
+            "case_code": null,
+            "case_type": "Personal Injury",
+            "litigation_stage": "Presuit",
+            "client_name": "Marie Merilus",
+            "case_open_date": "2024-09-04",
+            "accident_timestamp": "2024-04-03T16:00:00.000Z",
+            "statute_of_limitations": "2026-04-03",
+            "first_demand_date": null,
+            "first_offer_date": null,
+            "disengagement_date": null,
+            "case_law_status": "New",
+            "internal_case_status": "9. Case Complete",
+            "tbi_status": "PENDING TBI Decision",
+            "priority_rating": "8.00",
+            "latest_offer_amount": "0.00",
+            "earliest_offer_amount": null,
+            "valuation_low": "25000.00",
+            "valuation_high": "0.00",
+            "total_settlement_amount": null
+          },
+          {
+            "projection_id": "a45UR000002ZLmnYAG",
+            "matter_link": "a0OUR000007oevt2AA",
+            "projection_name": "P-173476",
+            "projection_created_date": "2025-01-07T14:10:35.000Z",
+            "projected_actual_value": "50000.00",
+            "projected_future_value": "50000.00",
+            "projection_matter_phase": "8. Case Complete",
+            "matter_id": "a0OUR000007oevt2AA",
+            "matter_name": "Romain Dominique 8/19/2024 GJL",
+            "matter_created_date": "2025-01-07T14:10:32.000Z",
+            "matter_phase": "8. Case Complete",
+            "legal_case_id": null,
+            "case_code": null,
+            "case_type": "Personal Injury",
+            "litigation_stage": "Litigation",
+            "client_name": "Romain Dominique",
+            "case_open_date": "2024-12-20",
+            "accident_timestamp": "2024-08-19T20:58:00.000Z",
+            "statute_of_limitations": "2026-08-19",
+            "first_demand_date": null,
+            "first_offer_date": "2025-11-12",
+            "disengagement_date": null,
+            "case_law_status": "New",
+            "internal_case_status": "9. Case Complete",
+            "tbi_status": "PENDING TBI Decision",
+            "priority_rating": "10.00",
+            "latest_offer_amount": "50000.00",
+            "earliest_offer_amount": "2025-11-12",
+            "valuation_low": "75000.00",
+            "valuation_high": "50000.00",
+            "total_settlement_amount": "50000.00"
+          },
+          {
+            "projection_id": "a45UR000002ZLmoYAG",
+            "matter_link": "a0OUR000007oevt2AA",
+            "projection_name": "P-173477",
+            "projection_created_date": "2025-01-07T14:10:35.000Z",
+            "projected_actual_value": "50000.00",
+            "projected_future_value": "50000.00",
+            "projection_matter_phase": "8. Case Complete",
+            "matter_id": "a0OUR000007oevt2AA",
+            "matter_name": "Romain Dominique 8/19/2024 GJL",
+            "matter_created_date": "2025-01-07T14:10:32.000Z",
+            "matter_phase": "8. Case Complete",
+            "legal_case_id": null,
+            "case_code": null,
+            "case_type": "Personal Injury",
+            "litigation_stage": "Litigation",
+            "client_name": "Romain Dominique",
+            "case_open_date": "2024-12-20",
+            "accident_timestamp": "2024-08-19T20:58:00.000Z",
+            "statute_of_limitations": "2026-08-19",
+            "first_demand_date": null,
+            "first_offer_date": "2025-11-12",
+            "disengagement_date": null,
+            "case_law_status": "New",
+            "internal_case_status": "9. Case Complete",
+            "tbi_status": "PENDING TBI Decision",
+            "priority_rating": "10.00",
+            "latest_offer_amount": "50000.00",
+            "earliest_offer_amount": "2025-11-12",
+            "valuation_low": "75000.00",
+            "valuation_high": "50000.00",
+            "total_settlement_amount": "50000.00"
+          },
+          {
+            "projection_id": "a45UR000002ZMe1YAG",
+            "matter_link": "a0OUR000007oflV2AQ",
+            "projection_name": "P-173478",
+            "projection_created_date": "2025-01-07T14:54:55.000Z",
+            "projected_actual_value": null,
+            "projected_future_value": null,
+            "projection_matter_phase": "8. Case Complete",
+            "matter_id": "a0OUR000007oflV2AQ",
+            "matter_name": "Michael Dominique 6/24/2024 GJL",
+            "matter_created_date": "2025-01-07T14:54:53.000Z",
+            "matter_phase": "8. Case Complete",
+            "legal_case_id": null,
+            "case_code": null,
+            "case_type": "Personal Injury",
+            "litigation_stage": "Presuit",
+            "client_name": "Michael Dominique",
+            "case_open_date": "2024-12-20",
+            "accident_timestamp": "2024-06-24T16:00:00.000Z",
+            "statute_of_limitations": "2026-06-24",
+            "first_demand_date": null,
+            "first_offer_date": null,
+            "disengagement_date": null,
+            "case_law_status": "New",
+            "internal_case_status": "9. Case Complete",
+            "tbi_status": "PENDING TBI Decision",
+            "priority_rating": "2.00",
+            "latest_offer_amount": "0.00",
+            "earliest_offer_amount": null,
+            "valuation_low": "0.00",
+            "valuation_high": "0.00",
+            "total_settlement_amount": null
+          },
+          {
+            "projection_id": "a45UR000002ZMe2YAG",
+            "matter_link": "a0OUR000007oflV2AQ",
+            "projection_name": "P-173479",
+            "projection_created_date": "2025-01-07T14:54:55.000Z",
+            "projected_actual_value": null,
+            "projected_future_value": null,
+            "projection_matter_phase": "8. Case Complete",
+            "matter_id": "a0OUR000007oflV2AQ",
+            "matter_name": "Michael Dominique 6/24/2024 GJL",
+            "matter_created_date": "2025-01-07T14:54:53.000Z",
+            "matter_phase": "8. Case Complete",
+            "legal_case_id": null,
+            "case_code": null,
+            "case_type": "Personal Injury",
+            "litigation_stage": "Presuit",
+            "client_name": "Michael Dominique",
+            "case_open_date": "2024-12-20",
+            "accident_timestamp": "2024-06-24T16:00:00.000Z",
+            "statute_of_limitations": "2026-06-24",
+            "first_demand_date": null,
+            "first_offer_date": null,
+            "disengagement_date": null,
+            "case_law_status": "New",
+            "internal_case_status": "9. Case Complete",
+            "tbi_status": "PENDING TBI Decision",
+            "priority_rating": "2.00",
+            "latest_offer_amount": "0.00",
+            "earliest_offer_amount": null,
+            "valuation_low": "0.00",
+            "valuation_high": "0.00",
+            "total_settlement_amount": null
+          },
+          {
+            "projection_id": "a45UR000002ZbmjYAC",
+            "matter_link": "a0OUR000007t43l2AA",
+            "projection_name": "P-173480",
+            "projection_created_date": "2025-01-08T16:12:39.000Z",
+            "projected_actual_value": "1000000.00",
+            "projected_future_value": "1000000.00",
+            "projection_matter_phase": "5. Negotiations",
+            "matter_id": "a0OUR000007t43l2AA",
+            "matter_name": "Santos Reloba Breto 12/31/2024",
+            "matter_created_date": "2025-01-08T16:12:36.000Z",
+            "matter_phase": "5. Negotiations",
+            "legal_case_id": null,
+            "case_code": null,
+            "case_type": "Personal Injury",
+            "litigation_stage": "Presuit",
+            "client_name": "Santos Reloba Breto",
+            "case_open_date": "2025-01-08",
+            "accident_timestamp": "2024-12-31T19:13:00.000Z",
+            "statute_of_limitations": "2026-12-31",
+            "first_demand_date": "2025-10-16",
+            "first_offer_date": "2025-11-17",
+            "disengagement_date": null,
+            "case_law_status": "New",
+            "internal_case_status": "5. Negotiations",
+            "tbi_status": "PENDING TBI Treatment Plan Complete",
+            "priority_rating": "10.00",
+            "latest_offer_amount": "150000.00",
+            "earliest_offer_amount": "2025-11-17",
+            "valuation_low": "500000.00",
+            "valuation_high": "1000000.00",
+            "total_settlement_amount": null
+          },
+          {
+            "projection_id": "a45UR000002ZbmkYAC",
+            "matter_link": "a0OUR000007t43l2AA",
+            "projection_name": "P-173481",
+            "projection_created_date": "2025-01-08T16:12:39.000Z",
+            "projected_actual_value": "1000000.00",
+            "projected_future_value": "1000000.00",
+            "projection_matter_phase": "5. Negotiations",
+            "matter_id": "a0OUR000007t43l2AA",
+            "matter_name": "Santos Reloba Breto 12/31/2024",
+            "matter_created_date": "2025-01-08T16:12:36.000Z",
+            "matter_phase": "5. Negotiations",
+            "legal_case_id": null,
+            "case_code": null,
+            "case_type": "Personal Injury",
+            "litigation_stage": "Presuit",
+            "client_name": "Santos Reloba Breto",
+            "case_open_date": "2025-01-08",
+            "accident_timestamp": "2024-12-31T19:13:00.000Z",
+            "statute_of_limitations": "2026-12-31",
+            "first_demand_date": "2025-10-16",
+            "first_offer_date": "2025-11-17",
+            "disengagement_date": null,
+            "case_law_status": "New",
+            "internal_case_status": "5. Negotiations",
+            "tbi_status": "PENDING TBI Treatment Plan Complete",
+            "priority_rating": "10.00",
+            "latest_offer_amount": "150000.00",
+            "earliest_offer_amount": "2025-11-17",
+            "valuation_low": "500000.00",
+            "valuation_high": "1000000.00",
+            "total_settlement_amount": null
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "limit": 10,
+          "hasMore": true,
+          "totalCount": 650
+        },
+        "timestamp": "2026-02-10T05:49:34.349Z"
+      },
+      "analytics_time_range": {
+        "from": "2025-01-01",
+        "to": "2025-12-31"
+      },
+      "voice_output": "29,703 retainers were signed.",
+      "text_output": "29,703 Retainers Signed"
+    }
+  },
+  "user": null
+}

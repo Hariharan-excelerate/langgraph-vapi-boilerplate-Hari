@@ -1,0 +1,433 @@
+Server listening on port 6065
+POST /v1/chat/completions – LangGraph appointment assistant (OpenAI-compatible)
+[2026-02-10T05:19:11.424Z] Incoming request to /chat/completions
+Request Body: {
+  "messages": [
+    {
+      "role": "user",
+      "content": "hi"
+    }
+  ]
+}
+[graph][detect_intent] triggered | lastUserMessage="hi" | detected=greeting | next_action=transfer
+[2026-02-10T05:19:13.396Z] Graph execution completed in 1972ms
+Graph Result: {
+  "callId": "call-30-1770700751426",
+  "rawCallerPhone": null,
+  "user_id": null,
+  "current_intent": "greeting",
+  "messages": [
+    {
+      "role": "user",
+      "content": "hi"
+    }
+  ],
+  "assistantResponse": "Thank you for calling! This is your scheduling assistant. How may I help you today?",
+  "metadata": {
+    "message_count": 1,
+    "last_updated": "2026-02-10T05:19:13.392Z",
+    "state": {
+      "normalized_phone": null,
+      "user_id": null,
+      "user_name": null,
+      "is_registered": false,
+      "current_intent": "greeting",
+      "previous_intent": "invalid",
+      "current_step": "mention_services",
+      "next_action": "detect_intent",
+      "intent_history": [
+        {
+          "intent": "greeting",
+          "timestamp": "2026-02-10T05:19:13.368Z",
+          "iteration": 2
+        }
+      ],
+      "iteration_count": 2,
+      "current_flow": null,
+      "flow_data": null,
+      "registration_data": null,
+      "selected_appointment_id": null,
+      "selected_slot_id": null,
+      "_available_slots": null,
+      "_cancellable_appointments": null,
+      "org_id": null,
+      "failure_count": 0,
+      "last_error": null,
+      "is_emergency": false,
+      "is_frustrated": false,
+      "should_transfer": false,
+      "call_ended": false,
+      "rejection_count": 0,
+      "requires_user_input": true,
+      "conversation_ended": false,
+      "transfer_to_agent": false,
+      "session_started_at": "2026-02-10T05:19:11.426Z",
+      "user_dob": null,
+      "dob_attempt_count": 0,
+      "identity_confirmed": false,
+      "identity_failed_end": false,
+      "verify_step": null,
+      "name_search_attempts": 0,
+      "last_spelled_name": null,
+      "pending_intent_after_verify": null,
+      "booking_step": null,
+      "visit_type": null,
+      "appointment_type": null,
+      "reason_text": null,
+      "verify_next": null,
+      "identity_offer_register_or_transfer": null,
+      "in_flow_next_route": null,
+      "output_mode": "voiceText",
+      "analytics_summary_raw": null,
+      "active_cases_raw": null,
+      "analytics_time_range": null,
+      "voice_output": null,
+      "text_output": null
+    }
+  },
+  "user": null
+}
+[2026-02-10T05:19:34.047Z] Incoming request to /chat/completions
+Request Body: {
+  "messages": [
+    {
+      "role": "user",
+      "content": "what are the leads in 2025"
+    }
+  ]
+}
+[graph][detect_intent] triggered | lastUserMessage="what are the leads in 2025" | detected=analytics_summary | next_action=analytics_summary
+Analytics API failed: TypeError: fetch failed
+    at node:internal/deps/undici/undici:16480:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async get (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\src\apiClient.ts:30:15)
+    at async RunnableCallable.analyticsSummary (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\src\graph\nodes\analyticsSummary.ts:31:26)
+    at async RunnableCallable.invoke (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\node_modules\@langchain\langgraph\src\utils.ts:85:21)
+    at async RunnableSequence.invoke (file:///C:/Users/user/Desktop/langgraph-vapi-boilerplate-Hari/langgraph-customllm-vapi/node_modules/@langchain/core/dist/runnables/base.js:1308:33)
+    at async _runWithRetry (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\node_modules\@langchain\langgraph\src\pregel\retry.ts:102:16)
+    at async PregelRunner._executeTasksWithRetry (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\node_modules\@langchain\langgraph\src\pregel\runner.ts:348:27)
+    at async PregelRunner.tick (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\node_modules\@langchain\langgraph\src\pregel\runner.ts:132:50)
+    at async CompiledStateGraph._runLoop (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\node_modules\@langchain\langgraph\src\pregel\index.ts:2057:9) {
+  [cause]: AggregateError [ECONNREFUSED]: 
+      at internalConnectMultiple (node:net:1193:18)
+      at afterConnectMultiple (node:net:1783:7) {
+    code: 'ECONNREFUSED',
+    [errors]: [ [Error], [Error] ]
+  }
+}
+[2026-02-10T05:19:39.456Z] Graph execution completed in 5409ms
+Graph Result: {
+  "callId": "call-54-1770700774047",
+  "rawCallerPhone": null,
+  "user_id": null,
+  "current_intent": "analytics_summary",
+  "messages": [
+    {
+      "role": "user",
+      "content": "what are the leads in 2025"
+    }
+  ],
+  "assistantResponse": "I'm sorry, but the data is not available.",
+  "metadata": {
+    "message_count": 1,
+    "last_updated": "2026-02-10T05:19:37.763Z",
+    "state": {
+      "normalized_phone": null,
+      "user_id": null,
+      "user_name": null,
+      "is_registered": false,
+      "current_intent": "analytics_summary",
+      "previous_intent": "invalid",
+      "current_step": "intent_analytics_summary",
+      "next_action": "analytics_summary",
+      "intent_history": [
+        {
+          "intent": "analytics_summary",
+          "timestamp": "2026-02-10T05:19:37.763Z",
+          "iteration": 2
+        }
+      ],
+      "iteration_count": 2,
+      "current_flow": null,
+      "flow_data": null,
+      "registration_data": null,
+      "selected_appointment_id": null,
+      "selected_slot_id": null,
+      "_available_slots": null,
+      "_cancellable_appointments": null,
+      "org_id": null,
+      "failure_count": 0,
+      "last_error": null,
+      "is_emergency": false,
+      "is_frustrated": false,
+      "should_transfer": false,
+      "call_ended": false,
+      "rejection_count": 0,
+      "requires_user_input": true,
+      "conversation_ended": false,
+      "transfer_to_agent": false,
+      "session_started_at": "2026-02-10T05:19:34.047Z",
+      "user_dob": null,
+      "dob_attempt_count": 0,
+      "identity_confirmed": false,
+      "identity_failed_end": false,
+      "verify_step": null,
+      "name_search_attempts": 0,
+      "last_spelled_name": null,
+      "pending_intent_after_verify": null,
+      "booking_step": null,
+      "visit_type": null,
+      "appointment_type": null,
+      "reason_text": null,
+      "verify_next": null,
+      "identity_offer_register_or_transfer": null,
+      "in_flow_next_route": null,
+      "output_mode": "voiceText",
+      "analytics_summary_raw": {
+        "error": "Failed to fetch data"
+      },
+      "active_cases_raw": null,
+      "analytics_time_range": null,
+      "voice_output": "I'm sorry, but the data is not available.",
+      "text_output": "Unfortunately, there was an error fetching the data, so I cannot provide the number of leads for 2025."
+    }
+  },
+  "user": null
+}
+[2026-02-10T05:21:23.414Z] Incoming request to /v1/chat/completions
+Request Body: {
+  "model": "default",
+  "messages": [
+    {
+      "role": "user",
+      "content": "hi"
+    }
+  ],
+  "call": {
+    "id": "chat-1770700880138-uid7w0z"
+  },
+  "customer": {
+    "number": "+15555555555"
+  },
+  "metadata": {
+    "rawCallerPhone": "+15555555555",
+    "vapiCallId": "chat-1770700880138-uid7w0z"
+  }
+}
+[graph][detect_intent] triggered | lastUserMessage="hi" | detected=greeting | next_action=transfer
+[2026-02-10T05:21:24.971Z] Graph execution completed in 1557ms
+Graph Result: {
+  "callId": "chat-1770700880138-uid7w0z",
+  "rawCallerPhone": "+15555555555",
+  "user_id": null,
+  "current_intent": "greeting",
+  "messages": [
+    {
+      "role": "user",
+      "content": "hi"
+    }
+  ],
+  "assistantResponse": "Thank you for calling! This is your scheduling assistant. How may I help you today?",
+  "metadata": {
+    "message_count": 1,
+    "last_updated": "2026-02-10T05:21:24.964Z",
+    "state": {
+      "normalized_phone": null,
+      "user_id": null,
+      "user_name": null,
+      "is_registered": false,
+      "current_intent": "greeting",
+      "previous_intent": "invalid",
+      "current_step": "mention_services",
+      "next_action": "detect_intent",
+      "intent_history": [
+        {
+          "intent": "greeting",
+          "timestamp": "2026-02-10T05:21:24.939Z",
+          "iteration": 2
+        }
+      ],
+      "iteration_count": 2,
+      "current_flow": null,
+      "flow_data": null,
+      "registration_data": null,
+      "selected_appointment_id": null,
+      "selected_slot_id": null,
+      "_available_slots": null,
+      "_cancellable_appointments": null,
+      "org_id": null,
+      "failure_count": 0,
+      "last_error": null,
+      "is_emergency": false,
+      "is_frustrated": false,
+      "should_transfer": false,
+      "call_ended": false,
+      "rejection_count": 0,
+      "requires_user_input": true,
+      "conversation_ended": false,
+      "transfer_to_agent": false,
+      "session_started_at": "2026-02-10T05:21:23.415Z",
+      "user_dob": null,
+      "dob_attempt_count": 0,
+      "identity_confirmed": false,
+      "identity_failed_end": false,
+      "verify_step": null,
+      "name_search_attempts": 0,
+      "last_spelled_name": null,
+      "pending_intent_after_verify": null,
+      "booking_step": null,
+      "visit_type": null,
+      "appointment_type": null,
+      "reason_text": null,
+      "verify_next": null,
+      "identity_offer_register_or_transfer": null,
+      "in_flow_next_route": null,
+      "output_mode": "voiceText",
+      "analytics_summary_raw": null,
+      "active_cases_raw": null,
+      "analytics_time_range": null,
+      "voice_output": null,
+      "text_output": null
+    }
+  },
+  "user": null
+}
+[2026-02-10T05:21:44.938Z] Incoming request to /v1/chat/completions
+Request Body: {
+  "model": "default",
+  "messages": [
+    {
+      "role": "user",
+      "content": "hi"
+    },
+    {
+      "role": "assistant",
+      "content": "Thank you for calling! This is your scheduling assistant. How may I help you today?"
+    },
+    {
+      "role": "user",
+      "content": "how many leads are generated in 2025"
+    }
+  ],
+  "call": {
+    "id": "chat-1770700880138-uid7w0z"
+  },
+  "customer": {
+    "number": "+15555555555"
+  },
+  "metadata": {
+    "rawCallerPhone": "+15555555555",
+    "vapiCallId": "chat-1770700880138-uid7w0z"
+  }
+}
+[graph][detect_intent] triggered | lastUserMessage="how many leads are generated in 2025" | detected=analytics_summary | next_action=analytics_summary
+Analytics API failed: TypeError: fetch failed
+    at node:internal/deps/undici/undici:16480:13
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async get (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\src\apiClient.ts:30:15)
+    at async RunnableCallable.analyticsSummary (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\src\graph\nodes\analyticsSummary.ts:31:26)
+    at async RunnableCallable.invoke (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\node_modules\@langchain\langgraph\src\utils.ts:85:21)
+    at async RunnableSequence.invoke (file:///C:/Users/user/Desktop/langgraph-vapi-boilerplate-Hari/langgraph-customllm-vapi/node_modules/@langchain/core/dist/runnables/base.js:1308:33)
+    at async _runWithRetry (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\node_modules\@langchain\langgraph\src\pregel\retry.ts:102:16)
+    at async PregelRunner._executeTasksWithRetry (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\node_modules\@langchain\langgraph\src\pregel\runner.ts:348:27)
+    at async PregelRunner.tick (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\node_modules\@langchain\langgraph\src\pregel\runner.ts:132:50)
+    at async CompiledStateGraph._runLoop (C:\Users\user\Desktop\langgraph-vapi-boilerplate-Hari\langgraph-customllm-vapi\node_modules\@langchain\langgraph\src\pregel\index.ts:2057:9) {
+  [cause]: AggregateError [ECONNREFUSED]: 
+      at internalConnectMultiple (node:net:1193:18)
+      at afterConnectMultiple (node:net:1783:7) {
+    code: 'ECONNREFUSED',
+    [errors]: [ [Error], [Error] ]
+  }
+}
+[2026-02-10T05:21:47.368Z] Graph execution completed in 2430ms
+Graph Result: {
+  "callId": "chat-1770700880138-uid7w0z",
+  "rawCallerPhone": "+15555555555",
+  "user_id": null,
+  "current_intent": "analytics_summary",
+  "messages": [
+    {
+      "role": "user",
+      "content": "hi"
+    },
+    {
+      "role": "assistant",
+      "content": "Thank you for calling! This is your scheduling assistant. How may I help you today?"
+    },
+    {
+      "role": "user",
+      "content": "how many leads are generated in 2025"
+    }
+  ],
+  "assistantResponse": "I'm sorry, but the data is not available.",
+  "metadata": {
+    "message_count": 3,
+    "last_updated": "2026-02-10T05:21:45.726Z",
+    "state": {
+      "normalized_phone": null,
+      "user_id": null,
+      "user_name": null,
+      "is_registered": false,
+      "current_intent": "analytics_summary",
+      "previous_intent": "greeting",
+      "current_step": "intent_analytics_summary",
+      "next_action": "analytics_summary",
+      "intent_history": [
+        {
+          "intent": "greeting",
+          "timestamp": "2026-02-10T05:21:24.939Z",
+          "iteration": 2
+        },
+        {
+          "intent": "analytics_summary",
+          "timestamp": "2026-02-10T05:21:45.726Z",
+          "iteration": 4
+        }
+      ],
+      "iteration_count": 4,
+      "current_flow": null,
+      "flow_data": null,
+      "registration_data": null,
+      "selected_appointment_id": null,
+      "selected_slot_id": null,
+      "_available_slots": null,
+      "_cancellable_appointments": null,
+      "org_id": null,
+      "failure_count": 0,
+      "last_error": null,
+      "is_emergency": false,
+      "is_frustrated": false,
+      "should_transfer": false,
+      "call_ended": false,
+      "rejection_count": 0,
+      "requires_user_input": true,
+      "conversation_ended": false,
+      "transfer_to_agent": false,
+      "session_started_at": "2026-02-10T05:21:23.415Z",
+      "user_dob": null,
+      "dob_attempt_count": 0,
+      "identity_confirmed": false,
+      "identity_failed_end": false,
+      "verify_step": null,
+      "name_search_attempts": 0,
+      "last_spelled_name": null,
+      "pending_intent_after_verify": null,
+      "booking_step": null,
+      "visit_type": null,
+      "appointment_type": null,
+      "reason_text": null,
+      "verify_next": null,
+      "identity_offer_register_or_transfer": null,
+      "in_flow_next_route": null,
+      "output_mode": "voiceText",
+      "analytics_summary_raw": {
+        "error": "Failed to fetch data"
+      },
+      "active_cases_raw": null,
+      "analytics_time_range": null,
+      "voice_output": "I'm sorry, but the data is not available.",
+      "text_output": "Unfortunately, I cannot provide the number of leads generated in 2025 as the data could not be fetched."
+    }
+  },
+  "user": null
+}

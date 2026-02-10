@@ -1,6 +1,6 @@
 import { ReskLLMClient } from "resk-llm-ts";
 import type OpenAI from "openai";
-import { getReskSecurityConfig } from "./reskConfig";
+import { getReskSecurityConfig } from "./reskConfig.js";
 
 /**
  * Create ReskLLMClient with the given Azure OpenAI client and security config from env.

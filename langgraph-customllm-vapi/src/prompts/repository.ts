@@ -62,12 +62,15 @@ export const INTENT_LABELS = [
   "cancel",
   "get_appointments",
   "frustration",
+  "analytics_summary",
+  "active_cases",
+  "greeting",
 ] as const;
 
 export type IntentLabel = (typeof INTENT_LABELS)[number];
 
 export function getIntentClassifierSystem(): string {
-  return `You are an intent classifier for a scheduling receptionist call. Use the conversation context and previous intent to interpret the user's last message. Reply with exactly one word from this list: ${INTENT_LABELS.join(", ")}.
+  return `You are an intent classifier for a scheduling receptionist agent. Use the conversation context and previous intent to interpret the user's last message. Reply with exactly one word from this list: ${INTENT_LABELS.join(", ")}.
 
 Context rules:
 - If the assistant recently asked for date of birth or "Are you [name]?" and the user's message looks like a date (e.g. "March 15 1999", "3/15/1999") or yes/no, do NOT use invalid_business. The user is answering the assistant's question; use unsupported so the flow can handle it, or treat as in-context.
@@ -85,6 +88,9 @@ Context rules:
 - reschedule: user wants to change an existing appointment.
 - cancel: user wants to cancel an appointment.
 - get_appointments: user wants to know their upcoming appointments (e.g. "what are my appointments?", "do I have any appointments?", "when is my next appointment?", "list my appointments").
+- analytics_summary: user asks for business analytics high-level summary, pipeline value, or specific metric counts (e.g. "total pipeline value", "how many active cases", "FY 2025 summary", "investment value", "what are the leads", "leads generated in 2025"). NOTE: If the user asks for LISTS, NAMES, "TOP X CASES", or "DETAILS", use active_cases instead.
+- active_cases: user wants to see/hear a LIST of details for active cases or "top" cases (e.g. "show me active cases", "list the open matters", "tell me about the top 3 cases", "what are the details of the biggest case?", "give me information about top cases").
+- greeting: user says hello, hi, hey, good morning, etc.
 - frustration: user is frustrated or asks for a human/agent.
 
 ${GOLDEN_RULES}`;
@@ -368,3 +374,138 @@ export const ALREADY_REGISTERED_MESSAGE =
 
 // ─── Language courtesy (EN + Mandarin); full phrases in verbiage.ts ─────────
 // Use: import { THANK_PATIENCE_EN, THANK_PATIENCE_ZH, ... } from "./verbiage.js";
+
+// ─── Analytics Date Parsing ────────────────────────────────────────────────
+
+export const ANALYTICS_DATE_SYSTEM = `You extract a date range for analytics queries. 
+Reply with exactly one JSON object: {"from": "YYYY-MM-DD", "to": "YYYY-MM-DD"}.
+
+Timezone: UTC. 
+Fiscal Year (FY) starts Jan 1 and ends Dec 31 of that year (calendar year match for this system).
+"FY 2025", "2025", "financial year 2025" -> {"from": "2025-01-01", "to": "2025-12-31"}
+"this year" -> from start of current year to end of current year.
+"last year" -> from start of previous year to end of previous year.
+"Q1 2025" -> {"from": "2025-01-01", "to": "2025-03-31"}
+If a specific month is mentioned: "January 2025" -> {"from": "2025-01-01", "to": "2025-01-31"}
+If no specific date/year is mentioned, reply with: {"from": null, "to": null}
+If invalid/unclear, reply with: {"from": "ERROR", "to": "ERROR"}`;
+
+export function buildAnalyticsDateUserMessage(userMessage: string, nowUtc: string): string {
+  return `Current date: ${nowUtc}\nUser message: "${userMessage}"\nReply with JSON range (from/to).`;
+}
+
+// ─── Analytics Synthesis ───────────────────────────────────────────────────
+
+export const ANALYTICS_SYNTHESIS_SYSTEM = `You are an analytics assistant. You have access to a JSON summary of business data (law firm pipeline/cases).
+Your job is to answer the user's question based *only* on the provided JSON data.
+
+You must output a JSON object with two fields:
+{
+  "voice_output": "Short, natural, conversational summary for speech. Round large numbers (e.g. '4.2 million').",
+  "text_output": "Detailed, formatted text with exact numbers (e.g. '$4,296,567'). Use Markdown for structure."
+}
+
+Rules:
+- voice_output: Keep it under 2 sentences. Easy to listen to. No list reading.
+  - Round large numbers for flow (e.g. '4.2 million') UNLESS the user asks for "exact", "precise", or "actual" numbers.
+  - If "exact" or "precise" is requested, speak the full number (e.g. "8 million, 750 thousand").
+- text_output: Can be longer. Use bullet points if needed. Show breakdowns if relevant to the question.
+- If the data answers the question, give the answer directly.
+- **Direct Answer Only**: Answer ONLY the specific metric asked. Do NOT add related metrics.
+- **No Extra Context**: Do not say "for the law firm" or "based on the data". Just say the number.
+- If the data is missing or zero, say so politely.
+
+**Field Mappings (CRITICAL):**
+- "Leads Generated" / "Leads" -> data.prospectCount
+- "Retainers Signed" / "Retainers" -> data.matterCount (IMPORTANT: matterCount is the number of Retainers Signed. It is NOT just "cases").
+- "Demands Sent" -> data.demandCount
+- "Active Cases" (In Progress) -> data.activeCasesCount
+- "Pipeline Value" -> data.PipelineValue.total_conservative_attorney_fee
+- "Average Case Value" -> data.caseValue.avg_case_value
+
+**Examples:**
+- User: "How many retainers signed?" -> JSON: { "voice_output": "41 retainers were signed.", "text_output": "41 Retainers Signed" }
+- User: "How many leads?" -> JSON: { "voice_output": "121 leads were generated.", "text_output": "121 Leads Generated" }
+
+`;
+
+export function buildAnalyticsSynthesisUserMessage(
+  userQuestion: string,
+  analyticsData: unknown,
+  timeRange: { from: string; to: string } | null
+): string {
+  const rangeStr = timeRange ? `Time range: ${timeRange.from} to ${timeRange.to}` : "Time range: Unspecified";
+  return `User Question: "${userQuestion}"
+${rangeStr}
+
+Data:
+${JSON.stringify(analyticsData, null, 2)}
+
+Reply with JSON: { "voice_output": "...", "text_output": "..." }`;
+}
+
+// ─── Active Cases Synthesis ────────────────────────────────────────────────
+
+export const ANALYTICS_ACTIVE_CASES_SYSTEM = `You are an analytics assistant. You have access to a JSON list of active cases/matters.
+Your job is to answer the user's question based *only* on the provided JSON data.
+
+You must output a JSON object with two fields:
+{
+  "voice_output": "Short, natural, conversational summary for speech.",
+  "text_output": "Detailed, formatted text with table or list. Use Markdown."
+}
+
+Rules:
+- voice_output:
+  - Mention there are X cases in total (from pagination.totalCount if available, or list length).
+  - Then, explicitly read out the details for the top 5 cases from the provided list.
+  - For each case, use these fields:
+    - **Name**: Use 'client_name' or 'matter_name'.
+    - **Status**: Use 'matter_phase' or 'internal_case_status'.
+    - **Value**: Use 'projected_actual_value' or 'valuation_low' (if not 0/null).
+  - Example: "I found 60 active cases. Here are the top 5: First, Orlando Alfonso is in Insurance Verification. Second, Vianka Tolentino is in Insurance Verification with a valuation of $25,000..."
+  - Keep the tone professional but conversational.
+
+- text_output:
+  - Provide a full list or table of the cases found.
+  - Columns: Client Name, Matter Name, Phase/Status, Valuation.
+`;
+
+export function buildActiveCasesSynthesisUserMessage(
+  userQuestion: string,
+  activeCasesData: unknown,
+  timeRange: { from: string; to: string } | null
+): string {
+  const rangeStr = timeRange ? `Time range: ${timeRange.from} to ${timeRange.to}` : "Time range: Unspecified";
+  return `User Question: "${userQuestion}"
+${rangeStr}
+
+Data (Active Cases List):
+${JSON.stringify(activeCasesData, null, 2)}
+
+Reply with JSON: { "voice_output": "...", "text_output": "..." }`;
+}
+
+// ─── Universal Synthesizer Formatting ──────────────────────────────────────
+
+export const GENERIC_SYNTHESIS_SYSTEM = `You are a voice/text formatter.
+Input: A response string (assistantResponse) and a target mode ("voice", "text", "voiceText").
+Output: JSON { "voice_output": "...", "text_output": "..." }
+
+Rules:
+- voice_output: Conversational, no markdown, no visual formatting. Expand abbreviations (e.g. "St." -> "Street").
+- text_output: formatted with Markdown if helpful.
+- If mode is "voice", prompt for voice_output only (text_output can be null or same).
+- If mode is "text", prompt for text_output (voice_output can be null).
+- If mode is "voiceText", provide both optimized versions.
+`;
+
+export function buildGenericSynthesisUserMessage(
+  response: string,
+  mode: string
+): string {
+  return `Original Response: "${response}"
+Target Mode: ${mode}
+
+Reply with JSON: { "voice_output": "...", "text_output": "..." }`;
+}

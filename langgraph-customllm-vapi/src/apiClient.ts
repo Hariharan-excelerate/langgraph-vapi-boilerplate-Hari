@@ -1,4 +1,4 @@
-import { config } from "./config";
+import { config } from "./config.js";
 
 const BASE = config.mockApiBaseUrl;
 
@@ -302,4 +302,84 @@ export function cancelAppointment(
     `/appointments/${appointmentId}/cancel`,
     body
   );
+}
+
+export interface AnalyticsSummaryResponse {
+  success: boolean;
+  data: {
+    caseValue: {
+      avg_case_value: string | null;
+      total_fee: string | null;
+      case_count: string;
+    };
+    PipelineValue: {
+      total_conservative_attorney_fee: string | null;
+      total_llf_attorney_fee: string | null;
+    };
+    caseValues: Array<{
+      projected_actual_value: string | null;
+      projected_future_value: string | null;
+      case_phase: string | null;
+    }>;
+    litigationValue: {
+      projected_actual_value?: string;
+      projected_future_value?: string;
+      count?: string;
+    };
+    SettlementValue: {
+      projected_actual_value?: string;
+      projected_future_value?: string;
+      count?: string;
+    };
+    prospectCount: string;
+    matterCount: string;
+    demandCount: string;
+    activeCasesCount: number;
+    activeCasesByPhase: Record<string, number>;
+    casePhases: Record<string, string>;
+    treatmentLevels: Record<string, string>;
+  };
+  filters: {
+    startDate: string;
+    endDate: string;
+  };
+  timestamp: string;
+}
+
+export interface ActiveCasesResponse {
+  success: boolean;
+  data: any[];
+  pagination: {
+    page: number;
+    limit: number;
+    hasMore: boolean;
+    totalCount: number;
+  };
+  timestamp: string;
+}
+
+export function getActiveCases(params: {
+  startDate: string;
+  endDate: string;
+  page?: number;
+  limit?: number;
+}): Promise<ActiveCasesResponse> {
+  const q: Record<string, string> = {
+    startDate: params.startDate,
+    endDate: params.endDate,
+  };
+  if (params.page) q.page = String(params.page);
+  if (params.limit) q.limit = String(params.limit);
+
+  return get<ActiveCasesResponse>("/v1/api/analytics/active-cases", q);
+}
+
+export function getAnalyticsSummary(params: {
+  startDate: string;
+  endDate: string;
+}): Promise<AnalyticsSummaryResponse> {
+  return get<AnalyticsSummaryResponse>("/v1/api/analytics/summary", {
+    startDate: params.startDate,
+    endDate: params.endDate,
+  });
 }

@@ -31,22 +31,22 @@ export async function detectIntent(state: GraphState): Promise<Partial<GraphStat
     current_intent: intent,
     metadata: state.metadata
       ? {
-          ...state.metadata,
-          last_updated: now,
-          state: {
-            ...state.metadata.state,
-            current_intent: intent,
-            previous_intent: prev,
-            intent_history: history,
-            iteration_count: iter,
-            current_step: `intent_${intent}`,
-            next_action: nextAction,
-            is_emergency: intent === "emergency",
-            is_frustrated: intent === "frustration",
-            should_transfer: intent === "unsupported" || intent === "frustration",
-            transfer_to_agent: intent === "unsupported" || intent === "frustration",
-          },
-        }
+        ...state.metadata,
+        last_updated: now,
+        state: {
+          ...state.metadata.state,
+          current_intent: intent,
+          previous_intent: prev,
+          intent_history: history,
+          iteration_count: iter,
+          current_step: `intent_${intent}`,
+          next_action: nextAction,
+          is_emergency: intent === "emergency",
+          is_frustrated: intent === "frustration",
+          should_transfer: intent === "unsupported" || intent === "frustration",
+          transfer_to_agent: intent === "unsupported" || intent === "frustration",
+        },
+      }
       : undefined,
   };
 }
@@ -74,6 +74,10 @@ function intentToNextAction(intent: IntentLabel): string {
       return "cancel_flow";
     case "get_appointments":
       return "get_appointments_flow";
+    case "analytics_summary":
+      return "analytics_summary"; // Not strictly a flow, but a node
+    case "active_cases":
+      return "active_cases";
     default:
       return "transfer";
   }

@@ -23,6 +23,14 @@ import {
   buildParseEmailUserMessage,
   MATCH_APPOINTMENT_SYSTEM,
   buildMatchAppointmentUserMessage,
+  ANALYTICS_DATE_SYSTEM,
+  buildAnalyticsDateUserMessage,
+  ANALYTICS_SYNTHESIS_SYSTEM,
+  buildAnalyticsSynthesisUserMessage,
+  ANALYTICS_ACTIVE_CASES_SYSTEM,
+  buildActiveCasesSynthesisUserMessage,
+  GENERIC_SYNTHESIS_SYSTEM,
+  buildGenericSynthesisUserMessage,
 } from "../prompts/repository.js";
 import type { IntentLabel } from "../prompts/repository.js";
 import type { ChatMessage } from "./state.js";
@@ -404,4 +412,122 @@ export async function verifyDobWithLLM(
   const userNorm = normalizeDobToYYYYMMDD(userDetails.dob);
   if (!YYYY_MM_DD.test(userNorm)) return false;
   return uttered === userNorm;
+}
+
+/**
+ * Extract date range for analytics.
+ */
+export async function extractAnalyticsDateRange(
+  userMessage: string,
+  nowUtc: string
+): Promise<{ from: string; to: string } | null> {
+  const completion = await getClient().chat.completions.create({
+    model: getDefaultModel(),
+    messages: [
+      { role: "system", content: ANALYTICS_DATE_SYSTEM },
+      { role: "user", content: buildAnalyticsDateUserMessage(userMessage, nowUtc) },
+    ],
+    temperature: 0,
+  });
+  const raw = (completion.choices[0]?.message?.content ?? "").trim();
+  try {
+    const parsed = JSON.parse(raw);
+    if (parsed.from === "ERROR" || !parsed.from) return null;
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Generate analytics voice/text summary.
+ */
+export async function generateAnalyticsSynthesis(
+  userQuestion: string,
+  data: unknown,
+  range: { from: string; to: string } | null
+): Promise<{ voice_output: string; text_output: string }> {
+  const completion = await getClient().chat.completions.create({
+    model: getDefaultModel(),
+    messages: [
+      { role: "system", content: ANALYTICS_SYNTHESIS_SYSTEM },
+      { role: "user", content: buildAnalyticsSynthesisUserMessage(userQuestion, data, range) },
+    ],
+    temperature: 0.3,
+  });
+  const raw = (completion.choices[0]?.message?.content ?? "").trim();
+  try {
+    // Attempt to extract JSON if wrapped in markdown blocks
+    const start = raw.indexOf("{");
+    const end = raw.lastIndexOf("}") + 1;
+    const jsonStr = (start >= 0 && end > start) ? raw.slice(start, end) : raw;
+    return JSON.parse(jsonStr);
+  } catch (e) {
+    // Fallback if JSON parsing fails
+    return {
+      voice_output: "Here is the summary.",
+      text_output: raw
+    };
+  }
+}
+
+/**
+ * Generate active cases voice/text summary.
+ */
+export async function generateActiveCasesSynthesis(
+  userQuestion: string,
+  data: unknown,
+  range: { from: string; to: string } | null
+): Promise<{ voice_output: string; text_output: string }> {
+  const completion = await getClient().chat.completions.create({
+    model: getDefaultModel(),
+    messages: [
+      { role: "system", content: ANALYTICS_ACTIVE_CASES_SYSTEM },
+      { role: "user", content: buildActiveCasesSynthesisUserMessage(userQuestion, data, range) },
+    ],
+    temperature: 0.3,
+  });
+  const raw = (completion.choices[0]?.message?.content ?? "").trim();
+  try {
+    // Attempt to extract JSON if wrapped in markdown blocks
+    const start = raw.indexOf("{");
+    const end = raw.lastIndexOf("}") + 1;
+    const jsonStr = (start >= 0 && end > start) ? raw.slice(start, end) : raw;
+    return JSON.parse(jsonStr);
+  } catch (e) {
+    // Fallback if JSON parsing fails
+    return {
+      voice_output: "Here is the list of active cases.",
+      text_output: raw
+    };
+  }
+}
+
+/**
+ * Generate generic voice/text formatting.
+ */
+export async function generateGenericSynthesis(
+  response: string,
+  mode: string
+): Promise<{ voice_output: string; text_output: string }> {
+  const completion = await getClient().chat.completions.create({
+    model: getDefaultModel(),
+    messages: [
+      { role: "system", content: GENERIC_SYNTHESIS_SYSTEM },
+      { role: "user", content: buildGenericSynthesisUserMessage(response, mode) },
+    ],
+    temperature: 0.3,
+  });
+  const raw = (completion.choices[0]?.message?.content ?? "").trim();
+  try {
+    const start = raw.indexOf("{");
+    const end = raw.lastIndexOf("}") + 1;
+    const jsonStr = (start >= 0 && end > start) ? raw.slice(start, end) : raw;
+    return JSON.parse(jsonStr);
+  } catch {
+    return {
+      voice_output: response,
+      text_output: response
+    };
+  }
 }

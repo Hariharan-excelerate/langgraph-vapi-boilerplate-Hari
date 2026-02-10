@@ -1,6 +1,6 @@
 import { ReskSecurityFilter } from "resk-llm-ts/dist/frontend/resk_security_filter.js";
 import type { ChatCompletionMessageParam } from "openai/resources/chat/completions";
-import { isReskEnabled, getReskStreamFilterConfig } from "./reskConfig";
+import { isReskEnabled, getReskStreamFilterConfig } from "./reskConfig.js";
 
 /** Result of validating messages before streaming. */
 export interface StreamValidationResult {

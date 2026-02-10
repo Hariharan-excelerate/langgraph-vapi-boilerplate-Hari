@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { config } from "./config";
+import { config } from "./config.js";
 import type { GraphState } from "./graph/state.js";
 
 const store = new Map<string, GraphState>();
