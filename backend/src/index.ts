@@ -12,7 +12,6 @@ import organizationsRoutes from "./routes/organizations";
 import providersRoutes from "./routes/providers";
 import availabilityRoutes from "./routes/availability";
 import appointmentsRoutes from "./routes/appointments";
-import analyticsRoutes from "./routes/analytics";
 
 const app = express();
 app.use(cors({ origin: true }));
@@ -37,9 +36,6 @@ app.use("/organizations", requireApiKey, organizationsRoutes);
 app.use("/providers", requireApiKey, providersRoutes);
 app.use("/availability", requireApiKey, availabilityRoutes);
 app.use("/appointments", requireApiKey, appointmentsRoutes);
-
-// Analytics (public or secured? User flow calls it directly. Let's make it public for now or assume apiKey is handled if passed)
-app.use("/v1/api/analytics", analyticsRoutes);
 
 app.use(errorHandler);
 

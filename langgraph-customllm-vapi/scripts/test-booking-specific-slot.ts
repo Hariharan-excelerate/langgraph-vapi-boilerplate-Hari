@@ -31,17 +31,17 @@ function nextTurnState(result: GraphState, nextUserContent: string): GraphState 
     assistantResponse: "",
     metadata: result.metadata
       ? {
-          ...result.metadata,
-          message_count: messages.length,
-          last_updated: new Date().toISOString(),
-          state: { ...prevInner, iteration_count: iter },
-        }
+        ...result.metadata,
+        message_count: messages.length,
+        last_updated: new Date().toISOString(),
+        state: { ...prevInner, iteration_count: iter },
+      }
       : result.metadata,
   };
 }
 
 async function checkBackend(): Promise<void> {
-  const res = await fetch(`${config.mockApiBaseUrl}/availability?organizationId=1`);
+  const res = await fetch(`${config.backendApiUrl}/availability?organizationId=1`);
   if (!res.ok) throw new Error(`Backend returned ${res.status}`);
 }
 

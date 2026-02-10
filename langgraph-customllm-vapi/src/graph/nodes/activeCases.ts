@@ -1,21 +1,24 @@
-import { getActiveCases } from "../../apiClient.js";
 import { extractAnalyticsDateRange } from "../llm.js";
 import type { GraphState } from "../state.js";
+import { getActiveCases } from "../../apiClient.js";
 
 const NODE = "active_cases";
 
+/**
+ * Fetch active cases from Legal API using apiClient.
+ * LATENCY OPTIMIZATION: Direct Legal API call (no backend proxy)
+ * ARCHITECTURE: Uses apiClient for clean abstraction and logging
+ */
 export async function activeCases(state: GraphState): Promise<Partial<GraphState>> {
     const lastUser = [...(state.messages ?? [])].reverse().find((m) => m.role === "user");
     const userContent = lastUser?.content ?? "";
 
-    // Use previous range if available, or current date if not
     const now = new Date().toISOString().split("T")[0];
     const previousRange = state.metadata?.state?.analytics_time_range;
 
     // Extract date range using LLM
     let range = await extractAnalyticsDateRange(userContent, now);
 
-    // If no new range extracted but we have a previous one and user implies continuation, reuse it.
     if (!range && previousRange) {
         range = previousRange;
     }
@@ -27,10 +30,11 @@ export async function activeCases(state: GraphState): Promise<Partial<GraphState
     }
 
     try {
-        const response = await getActiveCases({
+        // USE API CLIENT: Clean abstraction with automatic logging
+        const result = await getActiveCases({
             startDate: range.from,
             endDate: range.to,
-            limit: 10 // Limit details to top 10 for voice summary to avoid overload
+            limit: 10
         });
 
         return {
@@ -40,22 +44,22 @@ export async function activeCases(state: GraphState): Promise<Partial<GraphState
                 state: {
                     ...state.metadata.state,
                     analytics_time_range: range,
-                    active_cases_raw: response,
-                    // Clear previous outputs
+                    active_cases_raw: result,
                     voice_output: null,
                     text_output: null
                 }
             }
         };
     } catch (error) {
-        console.error("Active Cases API failed:", error);
+        console.error(`[${NODE}] Legal API failed:`, error);
+        // NO MOCK DATA FALLBACK - Return real error
         return {
-            assistantResponse: "I'm sorry, I couldn't access the active cases data at this time.",
+            assistantResponse: "I couldn't retrieve the active cases data from the system right now.",
             metadata: {
                 ...state.metadata,
                 state: {
                     ...state.metadata.state,
-                    active_cases_raw: { error: "Failed to fetch data" }
+                    active_cases_raw: { error: "Failed to fetch data from Legal API" }
                 }
             }
         };

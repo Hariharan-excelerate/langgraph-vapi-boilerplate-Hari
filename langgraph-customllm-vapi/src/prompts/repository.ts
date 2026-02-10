@@ -88,8 +88,8 @@ Context rules:
 - reschedule: user wants to change an existing appointment.
 - cancel: user wants to cancel an appointment.
 - get_appointments: user wants to know their upcoming appointments (e.g. "what are my appointments?", "do I have any appointments?", "when is my next appointment?", "list my appointments").
-- analytics_summary: user asks for business analytics high-level summary, pipeline value, or specific metric counts (e.g. "total pipeline value", "how many active cases", "FY 2025 summary", "investment value", "what are the leads", "leads generated in 2025"). NOTE: If the user asks for LISTS, NAMES, "TOP X CASES", or "DETAILS", use active_cases instead.
-- active_cases: user wants to see/hear a LIST of details for active cases or "top" cases (e.g. "show me active cases", "list the open matters", "tell me about the top 3 cases", "what are the details of the biggest case?", "give me information about top cases").
+- analytics_summary: user asks for business analytics SUMMARY, METRICS, COUNTS, or VALUES (e.g. "total pipeline value", "FY 2025 summary", "investment value", "what are the leads", "leads generated in 2025", "total case count", "how many prospects", "case statistics", "projected values"). This is for HIGH-LEVEL NUMBERS and TOTALS, NOT for listing specific cases. If user asks for LISTS, NAMES, DETAILS, "TOP X", or "SHOW ME THE CASES", use active_cases instead.
+- active_cases: user wants to see/hear a DETAILED LIST of active cases with specifics (e.g. "show me active cases", "list the open matters", "tell me about the top 3 cases", "what are the details of the biggest case?", "give me information about top cases", "list active cases", "show the cases"). This is for seeing ACTUAL CASE DETAILS and LISTS, not just summary counts.
 - greeting: user says hello, hi, hey, good morning, etc.
 - frustration: user is frustrated or asks for a human/agent.
 

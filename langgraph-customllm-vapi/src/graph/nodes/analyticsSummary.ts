@@ -1,22 +1,24 @@
-import { getAnalyticsSummary } from "../../apiClient.js";
 import { extractAnalyticsDateRange } from "../llm.js";
 import type { GraphState } from "../state.js";
+import { getAnalyticsSummary } from "../../apiClient.js";
 
 const NODE = "analytics_summary";
 
+/**
+ * Fetch analytics summary from Legal API using apiClient.
+ * LATENCY OPTIMIZATION: Direct Legal API call (no backend proxy)
+ * ARCHITECTURE: Uses apiClient for clean abstraction and logging
+ */
 export async function analyticsSummary(state: GraphState): Promise<Partial<GraphState>> {
     const lastUser = [...(state.messages ?? [])].reverse().find((m) => m.role === "user");
     const userContent = lastUser?.content ?? "";
 
-    // Use previous range if available, or current date if not
     const now = new Date().toISOString().split("T")[0];
     const previousRange = state.metadata?.state?.analytics_time_range;
 
     // Extract date range using LLM
     let range = await extractAnalyticsDateRange(userContent, now);
 
-    // If no new range extracted but we have a previous one and user implies continuation, reuse it.
-    // For simplicity, we default to "this year" (handled by prompt) if not specified.
     if (!range && previousRange) {
         range = previousRange;
     }
@@ -38,10 +40,13 @@ export async function analyticsSummary(state: GraphState): Promise<Partial<Graph
     }
 
     try {
-        const response = await getAnalyticsSummary({
+        // USE API CLIENT: Clean abstraction with automatic logging
+        const result = await getAnalyticsSummary({
             startDate: range.from,
             endDate: range.to
         });
+
+        const finalData = result.data || result;
 
         return {
             assistantResponse: "", // Synthesizer will fill this
@@ -50,22 +55,22 @@ export async function analyticsSummary(state: GraphState): Promise<Partial<Graph
                 state: {
                     ...state.metadata.state,
                     analytics_time_range: range,
-                    analytics_summary_raw: response.data,
-                    // Clear previous outputs
+                    analytics_summary_raw: finalData,
                     voice_output: null,
                     text_output: null
                 }
             }
         };
     } catch (error) {
-        console.error("Analytics API failed:", error);
+        console.error(`[${NODE}] Legal API failed:`, error);
+        // NO MOCK DATA FALLBACK - Return real error
         return {
-            assistantResponse: "I'm sorry, I couldn't access the analytics data at this time.",
+            assistantResponse: "I couldn't retrieve the analytics data from the system right now.",
             metadata: {
                 ...state.metadata,
                 state: {
                     ...state.metadata.state,
-                    analytics_summary_raw: { error: "Failed to fetch data" }
+                    analytics_summary_raw: { error: "Failed to fetch data from Legal API" }
                 }
             }
         };

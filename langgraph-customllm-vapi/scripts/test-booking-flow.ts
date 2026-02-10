@@ -3,7 +3,7 @@
  * Runs the LangGraph directly with a sequence of user messages (no HTTP).
  *
  * Prerequisites:
- * - Backend (Appointment API) running at MOCK_API_BASE_URL (default http://localhost:4000)
+ * - Backend (Appointment API) running at BACKEND_API_URL (default http://localhost:4000)
  * - Azure OpenAI env vars set (for LLM calls)
  * - CLINIC_TIMEZONE in .env (e.g. America/New_York)
  *
@@ -21,11 +21,11 @@ import type { ChatMessage } from "../src/graph/state.js";
 
 async function checkBackend(): Promise<void> {
   try {
-    const res = await fetch(`${config.mockApiBaseUrl}/availability?organizationId=1`);
+    const res = await fetch(`${config.backendApiUrl}/availability?organizationId=1`);
     if (!res.ok) throw new Error(`Backend returned ${res.status}`);
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
-    console.error("Backend not reachable at", config.mockApiBaseUrl);
+    console.error("Backend not reachable at", config.backendApiUrl);
     console.error("Start the backend first: cd backend && npm run dev");
     console.error("Error:", msg);
     process.exit(1);
@@ -55,14 +55,14 @@ function nextTurnState(
     assistantResponse: "",
     metadata: result.metadata
       ? {
-          ...result.metadata,
-          message_count: messages.length,
-          last_updated: new Date().toISOString(),
-          state: {
-            ...prevInner,
-            iteration_count: iter,
-          },
-        }
+        ...result.metadata,
+        message_count: messages.length,
+        last_updated: new Date().toISOString(),
+        state: {
+          ...prevInner,
+          iteration_count: iter,
+        },
+      }
       : result.metadata,
   };
 }
@@ -70,7 +70,7 @@ function nextTurnState(
 async function run(): Promise<void> {
   console.log("=== Booking flow test ===\n");
   await checkBackend();
-  console.log("Backend OK at", config.mockApiBaseUrl);
+  console.log("Backend OK at", config.backendApiUrl);
   console.log("Call ID:", CALL_ID);
   console.log("Caller phone:", RAW_CALLER_PHONE);
   console.log("");

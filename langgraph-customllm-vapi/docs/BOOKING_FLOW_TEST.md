@@ -11,7 +11,7 @@ Two test scripts run the booking flow end-to-end by invoking the LangGraph direc
 
 1. **Backend (Appointment API) running**  
    From repo root: `cd backend && npm run dev`  
-   Default URL: `http://localhost:4000` (override with `MOCK_API_BASE_URL`).
+   Default URL: `http://localhost:4000` (override with `BACKEND_API_URL`).
 
 2. **Environment**  
    - `.env` in `custom-llm-mock-server` with Azure OpenAI and `CLINIC_TIMEZONE` (e.g. `America/New_York`).
@@ -50,7 +50,7 @@ npx tsx scripts/test-booking-specific-slot.ts
 
 ## Fixing errors
 
-- **Backend not reachable:** Start the backend and ensure `MOCK_API_BASE_URL` matches.
+- **Backend not reachable:** Start the backend and ensure `BACKEND_API_URL` matches.
 - **Missing Azure OpenAI / env:** Ensure `.env` has the required keys (see `.env.example`).
 - **Graph or runtime errors:** Stack traces are printed; fix the reported file/line (e.g. in `bookFlow`, `confirmIdentity`, or graph routing).
 
